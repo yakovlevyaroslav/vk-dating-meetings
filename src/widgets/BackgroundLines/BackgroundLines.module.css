@@ -1,0 +1,10 @@
+.root {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 0;
+  width: 1600px;
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: none;
+}

@@ -1,0 +1,63 @@
+.root {
+  width: 100%;
+  padding-top: 170px;
+  scroll-margin-top: 100px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-llg);
+  position: relative;
+}
+
+.title {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 0.84;
+  text-align: center;
+  color: var(--color-pink);
+  position: relative;
+}
+
+.button {
+  composes: baseButton from '../../shared/styles/base.module.css';
+}
+
+.lighterBackground {
+  width: 1062px;
+  height: 738px;
+  position: absolute;
+  border-radius: 1062px;
+  filter: blur(120px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: -1;
+}
+
+.image {
+  position: absolute;
+  z-index: 1;
+}
+
+.imagePin {
+  top: -90px;
+  left: -120px;
+  width: 162px;
+  height: 162px;
+  transform: rotate(-30deg);
+  object-fit: contain;
+}
+
+.imageFlash {
+  bottom: -100px;
+  right: -180px;
+  width: 216px;
+  height: 212px;
+  transform: rotate(15deg);
+  object-fit: contain;
+}

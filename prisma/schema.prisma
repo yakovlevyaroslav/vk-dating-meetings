@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model City {
+  id     String  @id @default(cuid())
+  slug   String  @unique
+  name   String
+  places Place[]
+  routes Route[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Категория места (кафе, парк, музей…) — общий справочник для всех городов
+model Category {
+  id    String  @id @default(cuid())
+  name  String  @unique
+  emoji String?
+
+  places Place[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Карточка места/сети (бренд-уровень) — без координат, они у точек (PlaceVenue)
+model Place {
+  id     String @id @default(cuid())
+  cityId String
+  city   City   @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String  @db.Text
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  thumbnailImage String?
+  largeImage     String?
+
+  linkUrl          String?
+  promoDescription String? @db.Text
+  promoCode        String?
+
+  isPublished Boolean @default(true)
+  // Чем выше значение, тем выше место в выдаче на карте; при равенстве — сортировка по алфавиту
+  priority    Int     @default(0)
+
+  venues     PlaceVenue[]
+  routeStops RouteStop[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Физическая точка на карте, принадлежащая месту.
+// У обычного места — одна точка, у сети (например "Карлсон") — несколько.
+model PlaceVenue {
+  id      String @id @default(cuid())
+  placeId String
+  place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+
+  name      String
+  address   String?
+  latitude  Float
+  longitude Float
+  // Отмечает точку специальным значком на карте (пин со значком бонуса)
+  hasBonus  Boolean @default(false)
+
+  routeStops RouteStop[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Route {
+  id     String @id @default(cuid())
+  cityId String
+  city   City   @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String  @db.Text
+  image       String?
+
+  typeEmoji String?
+  typeLabel String?
+
+  isPublished Boolean @default(true)
+
+  stops RouteStop[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Остановка маршрута — ссылается на конкретную точку места (не на место целиком),
+// т.к. у места может быть несколько точек, а остановка — это ровно одна из них.
+model RouteStop {
+  id      String @id @default(cuid())
+  routeId String
+  route   Route  @relation(fields: [routeId], references: [id], onDelete: Cascade)
+
+  placeId String
+  place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+
+  placeVenueId String
+  placeVenue   PlaceVenue @relation(fields: [placeVenueId], references: [id], onDelete: Cascade)
+
+  order Int
+
+  @@unique([routeId, order])
+}
+
+model AdminUser {
+  id           String  @id @default(cuid())
+  email        String  @unique
+  passwordHash String
+  name         String?
+
+  createdAt DateTime @default(now())
+}

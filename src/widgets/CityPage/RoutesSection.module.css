@@ -1,0 +1,21 @@
+.root {
+  width: 100%;
+  scroll-margin-top: 100px;
+  margin-top: 120px;
+}
+
+.title {
+  composes: blockTitle from '@/shared/styles/base.module.css';
+  margin-bottom: var(--spacing-xxl);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.empty {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}

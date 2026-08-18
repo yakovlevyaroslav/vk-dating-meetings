@@ -1,0 +1,49 @@
+.root {
+  width: 100%;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  list-style: none;
+}
+
+.card {
+  padding: var(--spacing-lg);
+  border-radius: 22px;
+  height: 114px;
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: 160px 114px;
+}
+
+.card:nth-child(1) {
+  background-color: #0F1F36;
+  background-image: url('/images/3d-check-main.png');
+}
+
+.card:nth-child(2) {
+  background-color: #0077FF;
+  background-image: url('/images/3d-hearth-main.png');
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+.card:nth-child(3) {
+  background-color: #EB1F99;
+  background-image: url('/images/3d-gift-main.png');
+}
+
+.cardDescription {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+}
+
+@media (max-width: 799px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}

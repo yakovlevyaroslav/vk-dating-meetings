@@ -1,0 +1,29 @@
+.blockTitle {
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 0.84;
+  color: white;
+  text-align: center;
+}
+
+.standartText {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.baseButton {
+  background-color: var(--color-pink);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 36px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.baseButton:hover {
+  background-color: var(--color-pink-light);
+}

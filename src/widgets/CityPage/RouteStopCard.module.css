@@ -1,0 +1,112 @@
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 260px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-height: 140px;
+  max-height: 200px;
+  padding: var(--spacing-md);
+  border-radius: 20px;
+  background: var(--color-surface);
+  box-shadow: 0 4px 16px rgba(15, 31, 54, 0.06);
+  overflow: hidden;
+}
+
+.badge {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-background-secondary);
+}
+
+.title {
+  overflow: hidden;
+  padding-right: 32px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  max-height: calc(1.4em * 4);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.address {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-pink);
+}
+
+.dotRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  margin-top: var(--spacing-sm);
+}
+
+.dot {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-pink);
+}
+
+.pointer {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  z-index: 1;
+  /* width: 0;
+  height: 0;
+  border-top: 8px solid var(--color-surface);
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent; */
+  transform: translateX(-50%);
+  width: 30px;
+  height: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url('/images/ic-tip.svg');
+}
+
+.connector {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: calc(100% + var(--spacing-md));
+  border-top: 2px dashed var(--color-pink-light);
+  transform: translateY(-50%);
+}
+
+.root:last-child .connector {
+  display: none;
+}

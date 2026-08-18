@@ -1,0 +1,10 @@
+.root {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* контент всегда ровно --content-max-width, отступы по бокам добавляются сверху, а не урезают его */
+  padding-block: var(--spacing-lg) var(--spacing-xl);
+  padding-inline: max(var(--spacing-md), calc((100% - var(--content-max-width)) / 2));
+}

@@ -1,0 +1,135 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: var(--header-max-width);
+  margin: var(--spacing-md);
+  padding: 8px 8px 8px 24px;
+  border-radius: 34px;
+  background-color: white;
+  position: relative;
+}
+
+.headerLogo {
+  display: flex;
+  justify-content: center;
+  margin-right: auto;
+}
+
+.menuList {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menuItem {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 16px 24px;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  color: var(--color-primary);
+}
+
+.citySwitcher {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.citySwitcherTrigger {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 24px;
+  border: none;
+  border-radius: 52px;
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  height: 52px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.citySwitcherTrigger:hover {
+  background: var(--color-border);
+}
+
+.citySwitcherArrow {
+  transition: transform 0.15s ease;
+}
+
+.citySwitcherArrow__open {
+  transform: rotate(180deg);
+}
+
+.dropdownCity {
+  position: absolute;
+  top: calc(100% + var(--spacing-sm));
+  left: 0;
+  z-index: 10;
+  min-width: 286px;
+  padding: var(--spacing-sm);
+  border-radius: 34px;
+  background: var(--color-surface);
+  box-shadow: 0 12px 32px rgba(15, 31, 54, 0.16);
+}
+
+.dropdownCityList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.dropdownCityLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 15px 16px;
+  border-radius: 34px;
+}
+
+.dropdownCityLink:hover {
+  background: var(--color-background-secondary);
+}
+
+.dropdownCityLink__active {
+  background: var(--color-pink-alpha);
+}
+
+.dropdownCityCheck {
+  flex-shrink: 0;
+}
+
+.downloadAppButton {
+  composes: baseButton from '@/shared/styles/base.module.css';
+}
