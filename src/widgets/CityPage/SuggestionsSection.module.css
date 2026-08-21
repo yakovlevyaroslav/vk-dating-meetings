@@ -1,7 +1,7 @@
 .root {
   width: 100%;
   padding-top: 170px;
-  scroll-margin-top: 100px;
+  scroll-margin-top: 136px;
 }
 
 .content {
@@ -20,6 +20,8 @@
   text-align: center;
   color: var(--color-pink);
   position: relative;
+  font-family: var(--font-family-heading);
+  z-index: 2;
 }
 
 .button {
@@ -60,4 +62,33 @@
   height: 212px;
   transform: rotate(15deg);
   object-fit: contain;
+}
+
+@media (max-width: 799px) {
+  .root {
+    padding-top: 120px;
+  }
+
+  .content {
+    gap: var(--spacing-lg);
+  }
+
+  .title {
+    font-size: 48px;
+    letter-spacing: -1px;
+  }
+
+  .imagePin {
+    width: 140px;
+    height: 140px;
+    top: -130px;
+    left: -90px;
+  }
+
+  .imageFlash {
+    width: 162px;
+    height: 165px;
+    bottom: -120px;
+    right: -70px;
+  }
 }

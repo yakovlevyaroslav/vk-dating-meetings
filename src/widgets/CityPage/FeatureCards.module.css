@@ -47,3 +47,15 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 799px) {
+  .list {
+    gap: var(--spacing-sm);
+  }
+
+  .card {
+    padding: var(--spacing-md);
+    height: 98px;
+    background-size: 120px 98px;
+  }
+}

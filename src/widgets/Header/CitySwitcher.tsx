@@ -9,13 +9,13 @@ import { classNames } from '@/shared/lib/classNames';
 
 import styles from './Header.module.css';
 
-interface City {
+export interface City {
   slug: string;
   label: string;
   href: string;
 }
 
-const CITIES: City[] = [
+export const CITIES: City[] = [
   {
     slug: 'moscow', label: 'Москва', href: '/moscow',
   },
@@ -24,7 +24,7 @@ const CITIES: City[] = [
   },
 ];
 
-function getActiveCity(pathname: string): City {
+export function getActiveCity(pathname: string): City {
   return CITIES.find((city) => city.href === pathname) ?? CITIES[0];
 }
 

@@ -45,6 +45,7 @@
 .cardTitle {
   font-size: 48px;
   font-weight: 700;
+  font-family: var(--font-family-heading);
 }
 
 .cardSubtitle {
@@ -53,6 +54,14 @@
 }
 
 @media (max-width: 799px) {
+  .root {
+    margin-top: 100px;
+  }
+
+  .title {
+    margin-bottom: var(--spacing-xl);
+  }
+
   .grid {
     grid-template-columns: 1fr;
   }
@@ -60,5 +69,12 @@
   .card {
     aspect-ratio: auto;
     height: 240px;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xl);
+    min-height: 370px;
+  }
+
+  .cardTitle {
+    font-size: 32px;
   }
 }

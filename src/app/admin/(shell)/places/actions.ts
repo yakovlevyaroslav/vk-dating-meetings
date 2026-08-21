@@ -5,6 +5,8 @@ import { redirect } from 'next/navigation';
 
 import { prisma } from '@/core/db/prisma';
 
+const DESCRIPTION_MAX_LENGTH = 200;
+
 interface VenueInput {
   id?: string;
   name: string;
@@ -12,6 +14,26 @@ interface VenueInput {
   latitude: string;
   longitude: string;
   hasBonus: boolean;
+  isPrimary: boolean;
+  showInBonuses: boolean;
+  description: string;
+  promoDescription: string;
+  promoCode: string;
+}
+
+function venueData(venue: VenueInput) {
+  return {
+    name: venue.name,
+    address: venue.address.trim() || null,
+    latitude: Number(venue.latitude),
+    longitude: Number(venue.longitude),
+    hasBonus: venue.hasBonus,
+    isPrimary: venue.isPrimary,
+    showInBonuses: venue.showInBonuses,
+    description: venue.description.trim() || null,
+    promoDescription: venue.promoDescription.trim() || null,
+    promoCode: venue.promoCode.trim() || null,
+  };
 }
 
 function parseVenues(raw: FormDataEntryValue | null): VenueInput[] | null {
@@ -44,6 +66,16 @@ function validateVenues(venues: VenueInput[] | null): string | null {
   return null;
 }
 
+function validatePlaceFields(fields: { cityId: string; name: string; description: string }): string | null {
+  if (!fields.cityId || !fields.name) {
+    return 'Заполните название и город';
+  }
+  if (fields.description.length > DESCRIPTION_MAX_LENGTH) {
+    return `Описание не должно превышать ${DESCRIPTION_MAX_LENGTH} символов`;
+  }
+  return null;
+}
+
 function readPlaceFields(formData: FormData) {
   const priorityRaw = Number(formData.get('priority'));
 
@@ -59,6 +91,7 @@ function readPlaceFields(formData: FormData) {
     promoCode: String(formData.get('promoCode') ?? '').trim() || null,
     priority: Number.isFinite(priorityRaw) ? priorityRaw : 0,
     isPublished: formData.get('isPublished') === 'on',
+    hasBonus: formData.get('hasBonus') === 'on',
   };
 }
 
@@ -66,9 +99,10 @@ export async function createPlace(_prevState: string | undefined, formData: Form
   const fields = readPlaceFields(formData);
   const venues = parseVenues(formData.get('venues'));
   const venuesError = validateVenues(venues);
+  const fieldsError = validatePlaceFields(fields);
 
-  if (!fields.cityId || !fields.name) {
-    return 'Заполните название и город';
+  if (fieldsError) {
+    return fieldsError;
   }
   if (venuesError || !venues) {
     return venuesError ?? 'Не удалось прочитать точки';
@@ -78,13 +112,7 @@ export async function createPlace(_prevState: string | undefined, formData: Form
     data: {
       ...fields,
       venues: {
-        create: venues.map((venue) => ({
-          name: venue.name,
-          address: venue.address.trim() || null,
-          latitude: Number(venue.latitude),
-          longitude: Number(venue.longitude),
-          hasBonus: venue.hasBonus,
-        })),
+        create: venues.map((venue) => venueData(venue)),
       },
     },
   });
@@ -97,9 +125,10 @@ export async function updatePlace(placeId: string, _prevState: string | undefine
   const fields = readPlaceFields(formData);
   const venues = parseVenues(formData.get('venues'));
   const venuesError = validateVenues(venues);
+  const fieldsError = validatePlaceFields(fields);
 
-  if (!fields.cityId || !fields.name) {
-    return 'Заполните название и город';
+  if (fieldsError) {
+    return fieldsError;
   }
   if (venuesError || !venues) {
     return venuesError ?? 'Не удалось прочитать точки';
@@ -137,22 +166,12 @@ export async function updatePlace(placeId: string, _prevState: string | undefine
             where: {
               id: venue.id,
             },
-            data: {
-              name: venue.name,
-              address: venue.address.trim() || null,
-              latitude: Number(venue.latitude),
-              longitude: Number(venue.longitude),
-              hasBonus: venue.hasBonus,
-            },
+            data: venueData(venue),
           })
         : prisma.placeVenue.create({
             data: {
               placeId,
-              name: venue.name,
-              address: venue.address.trim() || null,
-              latitude: Number(venue.latitude),
-              longitude: Number(venue.longitude),
-              hasBonus: venue.hasBonus,
+              ...venueData(venue),
             },
           }),
     ),

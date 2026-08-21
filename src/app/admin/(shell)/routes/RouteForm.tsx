@@ -15,8 +15,6 @@ interface RouteFormValues {
   name: string;
   description: string;
   image: string | null;
-  typeEmoji: string;
-  typeLabel: string;
   isPublished: boolean;
   stops: StopDraft[];
 }
@@ -40,8 +38,6 @@ const EMPTY_VALUES: RouteFormValues = {
   name: '',
   description: '',
   image: null,
-  typeEmoji: '',
-  typeLabel: '',
   isPublished: true,
   stops: [],
 };
@@ -80,21 +76,11 @@ export function RouteForm(props: RouteFormProps) {
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="description">Описание</Label>
-        <Textarea id="description" name="description" defaultValue={values.description} rows={4} />
+        <Textarea id="description" name="description" defaultValue={values.description} rows={4} maxLength={200} />
+        <p className="text-sm text-muted-foreground">Не более 200 символов.</p>
       </div>
 
       <ImageUploadField name="image" label="Фото" folder="routes" defaultValue={values.image} />
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="typeEmoji">Вид маршрута — эмодзи</Label>
-          <Input id="typeEmoji" name="typeEmoji" defaultValue={values.typeEmoji} placeholder="🚶" maxLength={8} />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="typeLabel">Вид маршрута — текст</Label>
-          <Input id="typeLabel" name="typeLabel" defaultValue={values.typeLabel} placeholder="Пешая прогулка" />
-        </div>
-      </div>
 
       <label className="flex w-fit items-center gap-2 text-sm">
         <input type="checkbox" name="isPublished" defaultChecked={values.isPublished} className="size-4" />

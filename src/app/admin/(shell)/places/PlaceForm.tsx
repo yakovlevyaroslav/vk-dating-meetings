@@ -22,6 +22,7 @@ interface PlaceFormValues {
   promoCode: string;
   priority: string;
   isPublished: boolean;
+  hasBonus: boolean;
   venues: VenueDraft[];
 }
 
@@ -45,6 +46,7 @@ const EMPTY_VALUES: PlaceFormValues = {
   promoCode: '',
   priority: '0',
   isPublished: true,
+  hasBonus: false,
   venues: [],
 };
 
@@ -82,7 +84,8 @@ export function PlaceForm(props: PlaceFormProps) {
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="description">Описание</Label>
-        <Textarea id="description" name="description" defaultValue={values.description} rows={4} />
+        <Textarea id="description" name="description" defaultValue={values.description} rows={4} maxLength={200} />
+        <p className="text-sm text-muted-foreground">Не более 200 символов.</p>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -131,6 +134,16 @@ export function PlaceForm(props: PlaceFormProps) {
           <Label htmlFor="promoCode">Промокод</Label>
           <Input id="promoCode" name="promoCode" defaultValue={values.promoCode} />
         </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label className="flex w-fit items-center gap-2 text-sm">
+          <input type="checkbox" name="hasBonus" defaultChecked={values.hasBonus} className="size-4" />
+          Показывать бонус иконку, активировать промокод
+        </label>
+        <p className="text-sm text-muted-foreground">
+          Применяется сразу ко всем точкам сети, даже если у самой точки не отмечено или не заполнено.
+        </p>
       </div>
 
       <div className="flex flex-col gap-2">

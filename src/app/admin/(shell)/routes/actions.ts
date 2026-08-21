@@ -5,36 +5,73 @@ import { redirect } from 'next/navigation';
 
 import { prisma } from '@/core/db/prisma';
 
+const DESCRIPTION_MAX_LENGTH = 200;
+const STOP_DESCRIPTION_MAX_LENGTH = 120;
+
+interface StopInput {
+  placeVenueId: string;
+  description: string;
+}
+
 function readRouteFields(formData: FormData) {
   return {
     cityId: String(formData.get('cityId') ?? ''),
     name: String(formData.get('name') ?? '').trim(),
     description: String(formData.get('description') ?? '').trim(),
     image: String(formData.get('image') ?? '').trim() || null,
-    typeEmoji: String(formData.get('typeEmoji') ?? '').trim() || null,
-    typeLabel: String(formData.get('typeLabel') ?? '').trim() || null,
     isPublished: formData.get('isPublished') === 'on',
   };
 }
 
-function parseStopIds(raw: FormDataEntryValue | null): string[] | null {
+function validateRouteFields(fields: { cityId: string; name: string; description: string }): string | null {
+  if (!fields.cityId || !fields.name) {
+    return 'Заполните название и город';
+  }
+  if (fields.description.length > DESCRIPTION_MAX_LENGTH) {
+    return `Описание не должно превышать ${DESCRIPTION_MAX_LENGTH} символов`;
+  }
+  return null;
+}
+
+function parseStops(raw: FormDataEntryValue | null): StopInput[] | null {
   if (typeof raw !== 'string') {
     return null;
   }
 
   try {
     const parsed: unknown = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.every((item) => typeof item === 'string') ? (parsed as string[]) : null;
+    if (!Array.isArray(parsed)) {
+      return null;
+    }
+    const isValid = parsed.every(
+      (item) =>
+        typeof item === 'object' && item !== null
+        && typeof (item as StopInput).placeVenueId === 'string'
+        && typeof (item as StopInput).description === 'string',
+    );
+    return isValid ? (parsed as StopInput[]) : null;
   } catch {
     return null;
   }
 }
 
-async function resolveStopPlaceIds(stopIds: string[]): Promise<Map<string, string> | string> {
+function validateStops(stops: StopInput[] | null): string | null {
+  if (!stops || stops.length === 0) {
+    return 'Добавьте хотя бы одну остановку';
+  }
+  for (const stop of stops) {
+    if (stop.description.length > STOP_DESCRIPTION_MAX_LENGTH) {
+      return `Описание остановки не должно превышать ${STOP_DESCRIPTION_MAX_LENGTH} символов`;
+    }
+  }
+  return null;
+}
+
+async function resolveStopPlaceIds(stops: StopInput[]): Promise<Map<string, string> | string> {
   const venues = await prisma.placeVenue.findMany({
     where: {
       id: {
-        in: stopIds,
+        in: stops.map((stop) => stop.placeVenueId),
       },
     },
     select: {
@@ -43,7 +80,7 @@ async function resolveStopPlaceIds(stopIds: string[]): Promise<Map<string, strin
   });
   const venueToPlace = new Map(venues.map((venue) => [venue.id, venue.placeId]));
 
-  if (!stopIds.every((id) => venueToPlace.has(id))) {
+  if (!stops.every((stop) => venueToPlace.has(stop.placeVenueId))) {
     return 'Некоторые точки в маршруте больше не существуют — обновите список остановок';
   }
 
@@ -52,16 +89,18 @@ async function resolveStopPlaceIds(stopIds: string[]): Promise<Map<string, strin
 
 export async function createRoute(_prevState: string | undefined, formData: FormData) {
   const fields = readRouteFields(formData);
-  const stopIds = parseStopIds(formData.get('stops'));
+  const stops = parseStops(formData.get('stops'));
+  const fieldsError = validateRouteFields(fields);
+  const stopsError = validateStops(stops);
 
-  if (!fields.cityId || !fields.name) {
-    return 'Заполните название и город';
+  if (fieldsError) {
+    return fieldsError;
   }
-  if (!stopIds || stopIds.length === 0) {
-    return 'Добавьте хотя бы одну остановку';
+  if (stopsError || !stops) {
+    return stopsError ?? 'Не удалось прочитать остановки';
   }
 
-  const venueToPlace = await resolveStopPlaceIds(stopIds);
+  const venueToPlace = await resolveStopPlaceIds(stops);
   if (typeof venueToPlace === 'string') {
     return venueToPlace;
   }
@@ -70,10 +109,11 @@ export async function createRoute(_prevState: string | undefined, formData: Form
     data: {
       ...fields,
       stops: {
-        create: stopIds.map((placeVenueId, index) => ({
+        create: stops.map((stop, index) => ({
           order: index,
-          placeVenueId,
-          placeId: venueToPlace.get(placeVenueId) as string,
+          placeVenueId: stop.placeVenueId,
+          placeId: venueToPlace.get(stop.placeVenueId) as string,
+          description: stop.description.trim() || null,
         })),
       },
     },
@@ -85,16 +125,18 @@ export async function createRoute(_prevState: string | undefined, formData: Form
 
 export async function updateRoute(routeId: string, _prevState: string | undefined, formData: FormData) {
   const fields = readRouteFields(formData);
-  const stopIds = parseStopIds(formData.get('stops'));
+  const stops = parseStops(formData.get('stops'));
+  const fieldsError = validateRouteFields(fields);
+  const stopsError = validateStops(stops);
 
-  if (!fields.cityId || !fields.name) {
-    return 'Заполните название и город';
+  if (fieldsError) {
+    return fieldsError;
   }
-  if (!stopIds || stopIds.length === 0) {
-    return 'Добавьте хотя бы одну остановку';
+  if (stopsError || !stops) {
+    return stopsError ?? 'Не удалось прочитать остановки';
   }
 
-  const venueToPlace = await resolveStopPlaceIds(stopIds);
+  const venueToPlace = await resolveStopPlaceIds(stops);
   if (typeof venueToPlace === 'string') {
     return venueToPlace;
   }
@@ -112,11 +154,12 @@ export async function updateRoute(routeId: string, _prevState: string | undefine
       },
     }),
     prisma.routeStop.createMany({
-      data: stopIds.map((placeVenueId, index) => ({
+      data: stops.map((stop, index) => ({
         routeId,
-        placeVenueId,
-        placeId: venueToPlace.get(placeVenueId) as string,
+        placeVenueId: stop.placeVenueId,
+        placeId: venueToPlace.get(stop.placeVenueId) as string,
         order: index,
+        description: stop.description.trim() || null,
       })),
     }),
   ]);

@@ -4,6 +4,7 @@
   line-height: 0.84;
   color: white;
   text-align: center;
+  font-family: var(--font-family-heading);
 }
 
 .standartText {
@@ -26,4 +27,22 @@
 
 .baseButton:hover {
   background-color: var(--color-pink-light);
+}
+
+@media (max-width: 799px) {
+  .baseButton {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .blockTitle {
+    font-size: 48px;
+    line-height: 0.84;
+    text-align: center;
+  }
+
+  .standartText {
+    font-size: 14px;
+    line-height: 1.3;
+  }
 }

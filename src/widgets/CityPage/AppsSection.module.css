@@ -1,6 +1,7 @@
 .root {
   width: 100%;
   padding-top: 170px;
+  scroll-margin-top: 136px;
 }
 
 .content {
@@ -23,6 +24,7 @@
   color: var(--color-pink);
   position: relative;
   margin-top: 40px;
+  font-family: var(--font-family-heading);
 }
 
 .subtitle {
@@ -153,4 +155,42 @@
   height: 682px;
   object-fit: contain;
   z-index: -1;
+}
+
+@media (max-width: 799px) {
+  .root {
+    padding-top: 120px;
+  }
+
+  .title {
+    font-size: 48px;
+    letter-spacing: -1px;
+    margin-top: 0;
+    padding: 0 var(--spacing-md);
+  }
+
+  .subtitle {
+    font-size: 16px;
+    margin-bottom: 0;
+    line-height: 1.4;
+    letter-spacing: -1px;
+    padding: 0 var(--spacing-md);
+  }
+
+  .content {
+    gap: var(--spacing-lg);
+    padding: 48px var(--spacing-md) var(--spacing-lg);
+  }
+
+  .iconButtonQr {
+    display: none;
+  }
+
+  .itemTitle {
+    pointer-events: none;
+  }
+
+  .itemHeader {
+    padding: 20px;
+  }
 }

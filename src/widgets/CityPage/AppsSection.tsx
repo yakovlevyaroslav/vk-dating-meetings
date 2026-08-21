@@ -7,7 +7,7 @@ import { classNames } from '@/shared/lib/classNames';
 
 import styles from './AppsSection.module.css';
 
-const APP_STORES = ['App Store', 'Google Play', 'RuStore', 'Galaxy Store', 'GetApps', 'Huawei AppGallery'];
+const APP_STORES = ['Приложение для Iphone', 'RuStore', 'Galaxy Store', 'GetApps', 'Huawei AppGallery'];
 
 export function AppsSection() {
   const [openStores, setOpenStores] = useState<Record<string, boolean>>({
@@ -20,7 +20,7 @@ export function AppsSection() {
   }
 
   return (
-    <section className={styles.root}>
+    <section id="apps" className={styles.root}>
       <div className={styles.content}>
         <h2 className={styles.title}>
           Скачивайте <br />
@@ -45,7 +45,7 @@ export function AppsSection() {
                   <div className={styles.itemActions}>
                     <button
                       type="button"
-                      className={styles.iconButton}
+                      className={styles.iconButton + ' ' + styles.iconButtonQr}
                       onClick={() => toggleStore(store)}
                       aria-expanded={isOpen}
                     >

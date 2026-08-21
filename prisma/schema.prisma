@@ -55,6 +55,8 @@ model Place {
   isPublished Boolean @default(true)
   // Чем выше значение, тем выше место в выдаче на карте; при равенстве — сортировка по алфавиту
   priority    Int     @default(0)
+  // Показывать значок бонуса и промокод у всех точек сети сразу, даже если у самой точки не отмечено/не заполнено
+  hasBonus    Boolean @default(false)
 
   venues     PlaceVenue[]
   routeStops RouteStop[]
@@ -76,6 +78,15 @@ model PlaceVenue {
   longitude Float
   // Отмечает точку специальным значком на карте (пин со значком бонуса)
   hasBonus  Boolean @default(false)
+  // Основная точка сети — показывается в списке заведений вместо остальных точек этого места
+  isPrimary Boolean @default(false)
+  // Показывать эту точку в блоке «Бонусы» на публичной странице (если промокод резолвится)
+  showInBonuses Boolean @default(false)
+
+  // Если не заполнено — используется соответствующее поле у Place (описание/промокод сети)
+  description      String? @db.Text
+  promoDescription String? @db.Text
+  promoCode        String?
 
   routeStops RouteStop[]
 
@@ -91,9 +102,6 @@ model Route {
   name        String
   description String  @db.Text
   image       String?
-
-  typeEmoji String?
-  typeLabel String?
 
   isPublished Boolean @default(true)
 
@@ -117,6 +125,8 @@ model RouteStop {
   placeVenue   PlaceVenue @relation(fields: [placeVenueId], references: [id], onDelete: Cascade)
 
   order Int
+  // Описание места в контексте этого маршрута. Если не заполнено — используется обычное описание места
+  description String? @db.Text
 
   @@unique([routeId, order])
 }

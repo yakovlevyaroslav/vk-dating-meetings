@@ -6,7 +6,14 @@
 
 .title {
   composes: blockTitle from '@/shared/styles/base.module.css';
-  margin-bottom: var(--spacing-xxl);
+}
+
+.subtitle {
+  composes: standartText from '@/shared/styles/base.module.css';
+  max-width: 560px;
+  margin: var(--spacing-md) auto var(--spacing-xxl);
+  color: white;
+  text-align: center;
 }
 
 .list {
@@ -15,14 +22,16 @@
   gap: var(--spacing-lg);
 }
 
-.empty {
-  color: var(--color-text-secondary);
-  font-size: 14px;
+.listItem {
+  list-style: none;
 }
 
 @media (max-width: 799px) {
   .root {
     margin-top: 100px;
+  }
+
+  .subtitle {
     margin-bottom: var(--spacing-xl);
   }
 }

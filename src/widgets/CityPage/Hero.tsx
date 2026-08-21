@@ -11,7 +11,7 @@ export function Hero() {
         <span className={styles.titlePart3}>встреч</span>
       </h1>
       <p className={styles.subtitle}>
-        Топ локаций для свиданий от наших пользователей — выбирайте, что вам ближе
+        Топ локаций от наших пользователей — выбирайте, что вам ближе
       </p>
       <Image
         src="/images/3d-stars.png"

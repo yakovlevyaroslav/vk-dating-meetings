@@ -2,6 +2,7 @@
   position: relative;
   z-index: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   width: 100%;
   /* контент всегда ровно --content-max-width, отступы по бокам добавляются сверху, а не урезают его */

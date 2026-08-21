@@ -21,7 +21,7 @@ export function RouteStopCard(props: RouteStopCardProps) {
           </a>
         ) : null}
         <span className={styles.title}>{place.name}</span>
-        <p className={styles.description}>{place.description}</p>
+        <p className={styles.description}>{stop.description ?? place.description}</p>
         {placeVenue.address ? <span className={styles.address}>{placeVenue.address}</span> : null}
       </div>
       <div className={styles.dotRow}>

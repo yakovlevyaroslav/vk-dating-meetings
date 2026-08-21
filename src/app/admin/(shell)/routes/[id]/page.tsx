@@ -77,13 +77,12 @@ export default async function EditRoutePage(props: EditRoutePageProps) {
             name: currentRoute.name,
             description: currentRoute.description,
             image: currentRoute.image,
-            typeEmoji: currentRoute.typeEmoji ?? '',
-            typeLabel: currentRoute.typeLabel ?? '',
             isPublished: currentRoute.isPublished,
             stops: currentRoute.stops.map((stop) => ({
               placeVenueId: stop.placeVenueId,
               placeName: stop.place.name,
               venueName: stop.placeVenue.name,
+              description: stop.description ?? '',
             })),
           }}
         />

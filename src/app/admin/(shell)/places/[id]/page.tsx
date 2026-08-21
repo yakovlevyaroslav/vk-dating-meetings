@@ -68,6 +68,7 @@ export default async function EditPlacePage(props: EditPlacePageProps) {
             promoCode: place.promoCode ?? '',
             priority: String(place.priority),
             isPublished: place.isPublished,
+            hasBonus: place.hasBonus,
             venues: place.venues.map((venue) => ({
               id: venue.id,
               name: venue.name,
@@ -75,6 +76,11 @@ export default async function EditPlacePage(props: EditPlacePageProps) {
               latitude: String(venue.latitude),
               longitude: String(venue.longitude),
               hasBonus: venue.hasBonus,
+              isPrimary: venue.isPrimary,
+              showInBonuses: venue.showInBonuses,
+              description: venue.description ?? '',
+              promoDescription: venue.promoDescription ?? '',
+              promoCode: venue.promoCode ?? '',
             })),
           }}
         />

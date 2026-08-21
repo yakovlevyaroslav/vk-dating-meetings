@@ -4,6 +4,7 @@ import { getCategories } from '@/entities/category/getCategories';
 import { getCityPageData } from '@/entities/city/getCityPageData';
 
 import { AppsSection } from './AppsSection';
+import { BonusesSection } from './BonusesSection';
 import styles from './CityPage.module.css';
 import { FindPlaces } from './FindPlaces';
 import { Hero } from './Hero';
@@ -32,6 +33,7 @@ export async function CityPage(props: CityPageProps) {
       <MeetingPlacesSection places={city.places} categories={categories} />
 
       <RoutesSection routes={city.routes} />
+      <BonusesSection places={city.places} />
       <SuggestionsSection />
       <AppsSection />
     </main>

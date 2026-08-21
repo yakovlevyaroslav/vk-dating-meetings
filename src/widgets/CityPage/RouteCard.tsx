@@ -20,11 +20,7 @@ export function RouteCard(props: RouteCardProps) {
     <li className={styles.root}>
       <div className={styles.content}>
         <div className={styles.body}>
-          <div className={styles.header}>
-            {route.typeEmoji ? <span className={styles.typeEmoji}>{route.typeEmoji}</span> : null}
-            <span className={styles.name}>{route.typeLabel}</span>
-          </div>
-          {route.typeLabel ? <span className={styles.descriptionTitle}>{route.name}</span> : null}
+          <span className={styles.descriptionTitle}>{route.name}</span>
           {route.description ? <p className={styles.descriptionText}>{route.description}</p> : null}
           <button
             type="button"
@@ -32,7 +28,7 @@ export function RouteCard(props: RouteCardProps) {
             onClick={() => setIsOpen((prev) => !prev)}
             aria-expanded={isOpen}
           >
-            {isOpen ? 'Скрыть маршрут' : 'Открыть маршрут'}
+            {isOpen ? 'Скрыть маршрут' : 'Изучить маршрут'}
           </button>
         </div>
         {route.image ? (

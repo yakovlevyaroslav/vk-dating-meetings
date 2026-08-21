@@ -36,6 +36,20 @@ const vkSansDisplay = localFont({
   display: 'swap',
 });
 
+// Отдельное узкое начертание для заголовков — другая ширина (condensed),
+// поэтому регистрируется как самостоятельный font-family, а не доп. вес VKSansDisplay
+const vkSansDisplayCondensed = localFont({
+  src: [
+    {
+      path: '../../fonts/VKSansDisplayCondensedExtraBold.ttf',
+      weight: '800',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-vk-sans-condensed',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: {
     default: 'Места неслучайных свиданий',
@@ -52,7 +66,7 @@ export default function PublicRootLayout(props: PublicRootLayoutProps) {
   const { children } = props;
 
   return (
-    <html lang="ru" className={vkSansDisplay.variable}>
+    <html lang="ru" className={`${vkSansDisplay.variable} ${vkSansDisplayCondensed.variable}`}>
       <body>
         <BackgroundLines />
         <Header />

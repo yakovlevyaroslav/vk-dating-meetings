@@ -7,8 +7,11 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 import { quickCreatePlace } from './actions';
+
+const STOP_DESCRIPTION_MAX_LENGTH = 120;
 
 interface VenueOption {
   id: string;
@@ -25,6 +28,7 @@ export interface StopDraft {
   placeVenueId: string;
   placeName: string;
   venueName: string;
+  description: string;
 }
 
 interface RouteStopsFieldProps {
@@ -58,10 +62,16 @@ export function RouteStopsField(props: RouteStopsFieldProps) {
       return;
     }
     setStops((prev) => [...prev, {
-      placeVenueId: venue.id, placeName: selectedPlace.name, venueName: venue.name,
+      placeVenueId: venue.id, placeName: selectedPlace.name, venueName: venue.name, description: '',
     }]);
     setSelectedPlaceId('');
     setSelectedVenueId('');
+  }
+
+  function updateStop(index: number, patch: Partial<StopDraft>) {
+    setStops((prev) => prev.map((stop, i) => (i === index ? {
+      ...stop, ...patch,
+    } : stop)));
   }
 
   function removeStop(index: number) {
@@ -91,7 +101,7 @@ export function RouteStopsField(props: RouteStopsFieldProps) {
       setStops((prev) => [
         ...prev,
         {
-          placeVenueId: result.venue.id, placeName: result.placeName, venueName: result.venue.name,
+          placeVenueId: result.venue.id, placeName: result.placeName, venueName: result.venue.name, description: '',
         },
       ]);
       setQuickForm(EMPTY_QUICK_FORM);
@@ -106,36 +116,53 @@ export function RouteStopsField(props: RouteStopsFieldProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <input type="hidden" name="stops" value={JSON.stringify(stops.map((stop) => stop.placeVenueId))} />
+      <input
+        type="hidden"
+        name="stops"
+        value={JSON.stringify(stops.map((stop) => ({
+          placeVenueId: stop.placeVenueId, description: stop.description,
+        })))}
+      />
 
       {stops.length === 0 ? <p className="text-sm text-muted-foreground">Остановок пока нет</p> : null}
       {stops.map((stop, index) => (
 
-        <div key={index} className="flex items-center gap-2 rounded-md border p-2">
-          <span className="flex-1 text-sm">
-            {index + 1}. {stop.placeName} — {stop.venueName}
-          </span>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            onClick={() => moveStop(index, -1)}
-            disabled={index === 0}
-          >
-            <ArrowUpIcon />
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            onClick={() => moveStop(index, 1)}
-            disabled={index === stops.length - 1}
-          >
-            <ArrowDownIcon />
-          </Button>
-          <Button type="button" variant="ghost" size="icon-sm" onClick={() => removeStop(index)}>
-            <XIcon />
-          </Button>
+        <div key={index} className="flex flex-col gap-2 rounded-md border p-2">
+          <div className="flex items-center gap-2">
+            <span className="flex-1 text-sm">
+              {index + 1}. {stop.placeName} — {stop.venueName}
+            </span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => moveStop(index, -1)}
+              disabled={index === 0}
+            >
+              <ArrowUpIcon />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => moveStop(index, 1)}
+              disabled={index === stops.length - 1}
+            >
+              <ArrowDownIcon />
+            </Button>
+            <Button type="button" variant="ghost" size="icon-sm" onClick={() => removeStop(index)}>
+              <XIcon />
+            </Button>
+          </div>
+          <Textarea
+            value={stop.description}
+            onChange={(event) => updateStop(index, {
+              description: event.target.value,
+            })}
+            placeholder="Описание места в этом маршруте — если пусто, используется обычное описание места"
+            maxLength={STOP_DESCRIPTION_MAX_LENGTH}
+            rows={2}
+          />
         </div>
       ))}
 

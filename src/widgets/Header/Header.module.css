@@ -1,7 +1,7 @@
 .root {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
   position: fixed;
   top: 0;
@@ -24,6 +24,12 @@
 
 .headerLogo {
   display: flex;
+  justify-content: center;
+  margin-right: auto;
+}
+
+.headerLogoMobile {
+  display: none;
   justify-content: center;
   margin-right: auto;
 }
@@ -132,4 +138,95 @@
 
 .downloadAppButton {
   composes: baseButton from '@/shared/styles/base.module.css';
+}
+
+.mobileIconButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mobileIconCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg-gray);
+  color: var(--color-text-primary);
+}
+
+.mobilePanel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--color-surface);
+  border-radius: 34px;
+  z-index: 100;
+}
+
+.mobileMenuList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.mobileMenuListItem {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-md) 0;
+  margin: 0 var(--spacing-lg);
+}
+
+.mobileMenuListItem:last-child {
+  border-bottom: none;
+}
+
+.mobileMenuItem {
+  display: block;
+  padding: 0;
+  font-size: 34px;
+  font-weight: 700;
+  text-align: right;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+}
+
+@media (max-width: 799px) {
+  .headerLogo {
+    display: none;
+  }
+
+  .headerLogoMobile {
+    display: flex;
+  }
+
+  .menuList {
+    display: none;
+  }
+
+  .citySwitcher {
+    display: none;
+  }
+
+  .mobileIconButton {
+    display: flex;
+  }
+
+  .root {
+    padding: 8px;
+  }
+
+  .headerContainer {
+    padding: 8px 8px 8px 16px;
+  }
+
+  .dropdownCityList {
+    padding: var(--spacing-md);
+  }
 }

@@ -1,0 +1,130 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  background: white;
+  padding: var(--spacing-sm);
+  width: 100%;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  max-height: 384px;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--spacing-lg);
+}
+
+.image {
+  height: max-content;
+  min-height: 368px;
+  background-color: var(--color-background-secondary);
+  background-size: cover;
+  background-position: center;
+  border-radius: 32px;
+  flex: 1;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-llg);
+  align-items: flex-start;
+  flex: 0 0 40%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 4px 12px 4px 4px;
+  border-radius: 20px;
+  background: var(--color-background-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.categoryIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+}
+
+.link {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-background-secondary);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  max-height: calc(1.4em * 4);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  margin-bottom: auto;
+}
+
+.promoCodeRow {
+  composes: codeRow from '@/shared/ui/PromoBlock/PromoBlock.module.css';
+  position: relative;
+}
+
+.promoCopyIcon {
+  composes: copyIcon from '@/shared/ui/PromoBlock/PromoBlock.module.css';
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 799px) {
+  .content {
+    flex-direction: column;
+    max-height: none;
+    gap: var(--spacing-md);
+  }
+
+  .body {
+    flex: 1 1 auto;
+    padding: var(--spacing-sm);
+  }
+
+  .image {
+    width: 100%;
+    min-height: 240px;
+  }
+}

@@ -1,9 +1,39 @@
-import Image from 'next/image';
+'use client';
 
-import { CitySwitcher } from './CitySwitcher';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { XIcon } from 'lucide-react';
+import { useState } from 'react';
+
+import { classNames } from '@/shared/lib/classNames';
+
+import { CITIES, CitySwitcher, getActiveCity } from './CitySwitcher';
 import styles from './Header.module.css';
 
+const MENU_ITEMS = [
+  {
+    href: '#places', label: 'Места на карте',
+  },
+  {
+    href: '#routes', label: 'Маршруты свиданий',
+  },
+  {
+    href: '#suggest', label: 'Предложить место',
+  },
+];
+
+type MobilePanel = 'menu' | 'city' | null;
+
 export function Header() {
+  const pathname = usePathname();
+  const activeCity = getActiveCity(pathname);
+  const [openPanel, setOpenPanel] = useState<MobilePanel>(null);
+
+  function togglePanel(panel: MobilePanel) {
+    setOpenPanel((prev) => (prev === panel ? null : panel));
+  }
+
   return (
     <header className={styles.root}>
       <div className={styles.headerContainer}>
@@ -17,28 +47,96 @@ export function Header() {
             className={styles.logoIcon}
           />
         </div>
+        <div className={styles.headerLogoMobile}>
+          <Image src="/images/logo.svg" alt="VK Знакомства логотип" width={28} height={28} priority />
+        </div>
+
         <ul className={styles.menuList} aria-label="Меню">
-          <li>
-            <a href="#places" className={styles.menuItem}>
-              Места на карте
-            </a>
-          </li>
-          <li>
-            <a href="#routes" className={styles.menuItem}>
-              Маршруты свиданий
-            </a>
-          </li>
-          <li>
-            <a href="#suggest" className={styles.menuItem}>
-              Предложить место
-            </a>
-          </li>
+          {MENU_ITEMS.map((item) => (
+            <li key={item.href}>
+              <a href={item.href} className={styles.menuItem}>
+                {item.label}
+              </a>
+            </li>
+          ))}
         </ul>
+
         <CitySwitcher />
-        <a href="#" className={styles.downloadAppButton}>
+
+        <button
+          type="button"
+          className={styles.mobileIconButton}
+          onClick={() => togglePanel('menu')}
+          aria-expanded={openPanel === 'menu'}
+          aria-label="Меню"
+        >
+          {openPanel === 'menu' ? (
+            <span className={styles.mobileIconCircle}>
+              <XIcon size={18} />
+            </span>
+          ) : (
+            <Image src="/images/btn-menu.svg" alt="" width={40} height={40} />
+          )}
+        </button>
+
+        <button
+          type="button"
+          className={styles.mobileIconButton}
+          onClick={() => togglePanel('city')}
+          aria-expanded={openPanel === 'city'}
+          aria-label="Выбор города"
+        >
+          <Image src="/images/btn-city.svg" alt="" width={40} height={40} />
+        </button>
+
+        <a href="#apps" className={styles.downloadAppButton}>
           Скачать VK Знакомства
         </a>
       </div>
+
+      {openPanel === 'menu' ? (
+        <div className={styles.mobilePanel}>
+          <ul className={styles.mobileMenuList} aria-label="Меню">
+            {MENU_ITEMS.map((item) => (
+              <li key={item.href} className={styles.mobileMenuListItem}>
+                <a href={item.href} className={styles.mobileMenuItem} onClick={() => setOpenPanel(null)}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {openPanel === 'city' ? (
+        <div className={styles.mobilePanel}>
+          <ul className={styles.dropdownCityList} aria-label="Выбор города">
+            {CITIES.map((city) => (
+              <li key={city.slug}>
+                <Link
+                  href={city.href}
+                  onClick={() => setOpenPanel(null)}
+                  className={classNames(
+                    styles.dropdownCityLink,
+                    city.slug === activeCity.slug && styles.dropdownCityLink__active,
+                  )}
+                >
+                  {city.label}
+                  {city.slug === activeCity.slug ? (
+                    <Image
+                      src="/images/ic-check.svg"
+                      alt=""
+                      width={18}
+                      height={13}
+                      className={styles.dropdownCityCheck}
+                    />
+                  ) : null}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </header>
   );
 }

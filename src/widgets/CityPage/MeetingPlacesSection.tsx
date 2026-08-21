@@ -5,7 +5,9 @@ import { useMemo, useState } from 'react';
 
 import type { Category } from '@/entities/category/getCategories';
 import type { CityPageData } from '@/entities/city/getCityPageData';
+import { resolveVenuePromo } from '@/entities/place/resolvePlacePromo';
 import { classNames } from '@/shared/lib/classNames';
+import { PromoBlock } from '@/shared/ui/PromoBlock/PromoBlock';
 import { YandexMap } from '@/shared/ui/YandexMap';
 
 import styles from './MeetingPlacesSection.module.css';
@@ -25,7 +27,13 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [selectedVenueId, setSelectedVenueId] = useState<string | null>(null);
   const [networkFilterPlaceId, setNetworkFilterPlaceId] = useState<string | null>(null);
-  const [copiedPromoCode, setCopiedPromoCode] = useState(false);
+
+  const availableCategories = useMemo(() => {
+    const usedCategoryIds = new Set(
+      places.map((place) => place.categoryId).filter((id): id is string => id !== null),
+    );
+    return categories.filter((category) => usedCategoryIds.has(category.id));
+  }, [places, categories]);
 
   const filteredPlaces = useMemo(() => {
     let result = selectedCategoryId ? places.filter((place) => place.categoryId === selectedCategoryId) : places;
@@ -39,12 +47,20 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
     ? (places.find((place) => place.id === networkFilterPlaceId) ?? null)
     : null;
 
-  const venueEntries = useMemo<VenueEntry[]>(
-    () => filteredPlaces.flatMap((place) => place.venues.map((venue) => ({
-      place, venue,
-    }))),
-    [filteredPlaces],
-  );
+  const venueEntries = useMemo<VenueEntry[]>(() => {
+    if (networkFilterPlaceId) {
+      return filteredPlaces.flatMap((place) => place.venues.map((venue) => ({
+        place, venue,
+      })));
+    }
+
+    return filteredPlaces.flatMap((place) => {
+      const primaryVenue = place.venues.find((venue) => venue.isPrimary) ?? place.venues[0];
+      return primaryVenue ? [{
+        place, venue: primaryVenue,
+      }] : [];
+    });
+  }, [filteredPlaces, networkFilterPlaceId]);
 
   const points = useMemo(
     () =>
@@ -53,12 +69,13 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
         label: `${place.name} — ${venue.name}`,
         latitude: venue.latitude,
         longitude: venue.longitude,
-        hasBonus: venue.hasBonus,
+        hasBonus: venue.hasBonus || place.hasBonus,
       })),
     [venueEntries],
   );
 
   const selectedEntry = venueEntries.find((entry) => entry.venue.id === selectedVenueId) ?? null;
+  const resolvedPromo = selectedEntry ? resolveVenuePromo(selectedEntry.place, selectedEntry.venue) : null;
 
   const activePointIds = useMemo(
     () => new Set(selectedVenueId ? [selectedVenueId] : []),
@@ -71,19 +88,13 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
     setNetworkFilterPlaceId(null);
   }
 
-  function handleCopyPromoCode(code: string) {
-    void navigator.clipboard.writeText(code);
-    setCopiedPromoCode(true);
-    setTimeout(() => setCopiedPromoCode(false), 1500);
-  }
-
   return (
     <section id="places" className={styles.root}>
-      <h2 className={styles.title}>Места встреч</h2>
+      <h2 className={styles.title}>Места на карте</h2>
       <div className={styles.interactive}>
         <div className={styles.filters}>
           <ul className={styles.categoryList} aria-label="Категории">
-            {categories.map((category) => (
+            {availableCategories.map((category) => (
               <li key={category.id}>
                 <button
                   type="button"
@@ -147,7 +158,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                         <span className={styles.placeImageWrapper}>
                           {/* eslint-disable-next-line @next/next/no-img-element -- контент загружается через админку, размеры заранее неизвестны */}
                           <img src={place.thumbnailImage} alt={place.name} className={styles.placeImage} />
-                          {venue.hasBonus ? (
+                          {venue.hasBonus || place.hasBonus ? (
                             <Image
                               src="/images/ic-card-badge.svg"
                               alt="Есть бонус"
@@ -206,8 +217,8 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 <span className={styles.detailName}>
                   {selectedEntry.place.name} — {selectedEntry.venue.name}
                 </span>
-                {selectedEntry.place.description ? (
-                  <p className={styles.detailDescription}>{selectedEntry.place.description}</p>
+                {resolvedPromo?.description ? (
+                  <p className={styles.detailDescription}>{resolvedPromo.description}</p>
                 ) : null}
                 {/* {selectedEntry.venue.address ? (
                   <span className={styles.detailAddress}>{selectedEntry.venue.address}</span>
@@ -232,24 +243,10 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                     Все заведения сети <span className={styles.detailNetworkButtonCount}>{selectedEntry.place.venues.length}</span>
                   </button>
                 ) : null}
-                {selectedEntry.place.promoCode ? (
-                  <div className={styles.detailPromo}>
-                    <div className={styles.detailPromoHeader}>
-                      <Image src="/images/ic-card-badge.svg" alt="Есть бонус" width={32} height={32} className={styles.detailPromoBadge} />
-                      <span className={styles.detailPromoDescription}>{selectedEntry.place.promoDescription}</span>
-                    </div>
-                    <button
-                      type="button"
-                      className={styles.detailPromoCodeRow}
-                      onClick={() => handleCopyPromoCode(selectedEntry.place.promoCode ?? '')}
-                      aria-label="Скопировать промокод"
-                    >
-                      <span className={styles.detailPromoCode}>{selectedEntry.place.promoCode}</span>
-                      <Image src="/images/ic-copy.svg" alt="" width={16} height={16} className={styles.detailPromoCopyIcon} />
-                    </button>
-                    {copiedPromoCode ? <span className={styles.detailPromoCopied}>Скопировано</span> : null}
-                  </div>
-                ) : null}
+                <PromoBlock
+                  promoDescription={resolvedPromo?.promoDescription ?? null}
+                  promoCode={resolvedPromo?.promoCode ?? null}
+                />
               </div>
             </div>
           ) : null}

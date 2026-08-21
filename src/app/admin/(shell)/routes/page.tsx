@@ -35,7 +35,6 @@ export default async function AdminRoutesPage() {
               <TableRow>
                 <TableHead>Название</TableHead>
                 <TableHead>Город</TableHead>
-                <TableHead>Вид</TableHead>
                 <TableHead>Остановок</TableHead>
                 <TableHead>Опубликовано</TableHead>
               </TableRow>
@@ -49,9 +48,6 @@ export default async function AdminRoutesPage() {
                     </Link>
                   </TableCell>
                   <TableCell>{route.city.name}</TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {route.typeEmoji} {route.typeLabel}
-                  </TableCell>
                   <TableCell>{route._count.stops}</TableCell>
                   <TableCell>{route.isPublished ? 'Да' : 'Нет'}</TableCell>
                 </TableRow>
