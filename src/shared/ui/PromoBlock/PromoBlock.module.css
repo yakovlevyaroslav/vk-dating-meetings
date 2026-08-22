@@ -62,3 +62,16 @@
   padding: var(--spacing-sm);
   text-align: center;
 }
+
+
+@media (max-width: 799px) {
+  .root {
+    margin-top: var(--spacing-md);
+    border-radius: var(--spacing-llg);
+  }
+
+  .codeRow {
+    height: 52px;
+    font-size: 16px;
+  }
+}

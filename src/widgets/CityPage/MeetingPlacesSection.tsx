@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import type { Category } from '@/entities/category/getCategories';
 import type { CityPageData } from '@/entities/city/getCityPageData';
@@ -27,6 +27,8 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [selectedVenueId, setSelectedVenueId] = useState<string | null>(null);
   const [networkFilterPlaceId, setNetworkFilterPlaceId] = useState<string | null>(null);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
 
   const availableCategories = useMemo(() => {
     const usedCategoryIds = new Set(
@@ -82,17 +84,93 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
     [selectedVenueId],
   );
 
+  useEffect(() => {
+    if (!isMobileOpen) {
+      return;
+    }
+    const html = document.documentElement;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    html.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    return () => {
+      html.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+    };
+  }, [isMobileOpen]);
+
   function handleCategoryClick(categoryId: string) {
     setSelectedCategoryId((prev) => (prev === categoryId ? null : categoryId));
     setSelectedVenueId(null);
     setNetworkFilterPlaceId(null);
   }
 
+  function selectVenue(venueId: string) {
+    setSelectedVenueId(venueId);
+    setIsFiltersExpanded(false);
+  }
+
+  function showNetworkVenues(placeId: string) {
+    setNetworkFilterPlaceId(placeId);
+    setSelectedVenueId(null);
+    setIsFiltersExpanded(true);
+  }
+
+  function openMobile() {
+    setIsMobileOpen(true);
+  }
+
+  function closeMobile() {
+    setIsMobileOpen(false);
+    setIsFiltersExpanded(false);
+    setSelectedVenueId(null);
+  }
+
+  function toggleFiltersExpanded() {
+    setIsFiltersExpanded((prev) => !prev);
+  }
+
   return (
     <section id="places" className={styles.root}>
       <h2 className={styles.title}>Места на карте</h2>
-      <div className={styles.interactive}>
+      {isMobileOpen ? (
+        <button type="button" className={styles.mobileBackdrop} onClick={closeMobile} aria-label="Закрыть" />
+      ) : null}
+
+      {isMobileOpen ? (
+        <button type="button" className={styles.mobileCloseButton} onClick={closeMobile} aria-label="Закрыть">
+          <Image src="/images/btn-close.svg" alt="" width={32} height={32} />
+        </button>
+      ) : null}
+
+      <div
+        className={classNames(
+          styles.interactive,
+          isMobileOpen && styles.interactive__mobileOpen,
+          isMobileOpen && selectedEntry && styles.interactive__placeSelected,
+          isMobileOpen && isFiltersExpanded && !selectedEntry && styles.interactive__filtersExpanded,
+        )}
+      >
+        {!isMobileOpen ? (
+          <button
+            type="button"
+            className={styles.mobileOpenOverlay}
+            onClick={openMobile}
+            aria-label="Открыть карту мест"
+          />
+        ) : null}
+
         <div className={styles.filters}>
+          <button
+            type="button"
+            className={styles.filtersHandle}
+            onClick={toggleFiltersExpanded}
+            aria-expanded={isFiltersExpanded}
+            aria-label={isFiltersExpanded ? 'Свернуть список мест' : 'Развернуть список мест'}
+          >
+            <span className={styles.filtersHandleBar} />
+          </button>
+
           <ul className={styles.categoryList} aria-label="Категории">
             {availableCategories.map((category) => (
               <li key={category.id}>
@@ -152,7 +230,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                     <button
                       type="button"
                       className={classNames(styles.placeItem, isSelected && styles.placeItem__active)}
-                      onClick={() => setSelectedVenueId(venue.id)}
+                      onClick={() => selectVenue(venue.id)}
                     >
                       {place.thumbnailImage ? (
                         <span className={styles.placeImageWrapper}>
@@ -189,7 +267,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
               points={points}
               className={styles.map}
               activePointIds={activePointIds}
-              onPointClick={setSelectedVenueId}
+              onPointClick={selectVenue}
             />
           ) : (
             <div className={styles.mapEmpty}>Нет точек для отображения</div>
@@ -238,7 +316,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                   <button
                     type="button"
                     className={styles.detailNetworkButton}
-                    onClick={() => setNetworkFilterPlaceId(selectedEntry.place.id)}
+                    onClick={() => showNetworkVenues(selectedEntry.place.id)}
                   >
                     Все заведения сети <span className={styles.detailNetworkButtonCount}>{selectedEntry.place.venues.length}</span>
                   </button>

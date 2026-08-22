@@ -22,9 +22,15 @@
   cursor: pointer;
 }
 
+/* Кнопка встроенного контрола карты — рендерится самим SDK Яндекс.Карт вне React,
+   поэтому дотянуться до неё можно только через :global */
+.root :global(.ymaps3--control-button) {
+  display: none;
+}
+
 
 @media (max-width: 799px) {
   .root {
-    border-radius: 32px;
+    border-radius: 32px 32px 0 0;
   }
 }
