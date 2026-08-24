@@ -139,3 +139,12 @@ model AdminUser {
 
   createdAt DateTime @default(now())
 }
+
+// Единственная запись (id всегда "main") с глобальными переключателями блоков сайта
+model SiteSettings {
+  id                 String  @id @default("main")
+  showRoutesSection  Boolean @default(true)
+  showBonusesSection Boolean @default(true)
+
+  updatedAt DateTime @updatedAt
+}

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { getCategories } from '@/entities/category/getCategories';
 import { getCityPageData } from '@/entities/city/getCityPageData';
+import { getSiteSettings } from '@/entities/siteSettings/getSiteSettings';
 
 import { AppsSection } from './AppsSection';
 import { BonusesSection } from './BonusesSection';
@@ -18,7 +19,11 @@ interface CityPageProps {
 
 export async function CityPage(props: CityPageProps) {
   const { citySlug } = props;
-  const [city, categories] = await Promise.all([getCityPageData(citySlug), getCategories()]);
+  const [city, categories, settings] = await Promise.all([
+    getCityPageData(citySlug),
+    getCategories(),
+    getSiteSettings(),
+  ]);
 
   if (!city) {
     notFound();
@@ -32,8 +37,8 @@ export async function CityPage(props: CityPageProps) {
 
       <MeetingPlacesSection places={city.places} categories={categories} />
 
-      <RoutesSection routes={city.routes} />
-      <BonusesSection places={city.places} />
+      {settings.showRoutesSection ? <RoutesSection routes={city.routes} /> : null}
+      {settings.showBonusesSection ? <BonusesSection places={city.places} /> : null}
       <SuggestionsSection />
       <AppsSection />
     </main>

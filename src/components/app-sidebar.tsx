@@ -1,6 +1,8 @@
 'use client';
 
-import { Building2Icon, LayoutDashboardIcon, MapPinIcon, RouteIcon, TagIcon } from 'lucide-react';
+import {
+  Building2Icon, LayoutDashboardIcon, MapPinIcon, RouteIcon, SettingsIcon, TagIcon,
+} from 'lucide-react';
 import type { ComponentProps } from 'react';
 
 import { NavMain } from '@/components/nav-main';
@@ -39,6 +41,11 @@ const navMain = [
     title: 'Маршруты',
     url: '/admin/routes',
     icon: <RouteIcon />,
+  },
+  {
+    title: 'Настройки',
+    url: '/admin/settings',
+    icon: <SettingsIcon />,
   },
 ];
 
