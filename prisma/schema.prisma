@@ -131,11 +131,17 @@ model RouteStop {
   @@unique([routeId, order])
 }
 
+enum AdminRole {
+  SUPERADMIN
+  ADMIN
+}
+
 model AdminUser {
-  id           String  @id @default(cuid())
-  email        String  @unique
+  id           String    @id @default(cuid())
+  email        String    @unique
   passwordHash String
   name         String?
+  role         AdminRole @default(ADMIN)
 
   createdAt DateTime @default(now())
 }

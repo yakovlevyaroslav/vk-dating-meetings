@@ -298,9 +298,6 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 {resolvedPromo?.description ? (
                   <p className={styles.detailDescription}>{resolvedPromo.description}</p>
                 ) : null}
-                {/* {selectedEntry.venue.address ? (
-                  <span className={styles.detailAddress}>{selectedEntry.venue.address}</span>
-                ) : null} */}
                 {selectedEntry.place.linkUrl ? (
                   <a
                     href={selectedEntry.place.linkUrl}

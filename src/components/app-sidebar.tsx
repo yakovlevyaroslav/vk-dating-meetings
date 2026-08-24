@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  Building2Icon, LayoutDashboardIcon, MapPinIcon, RouteIcon, SettingsIcon, TagIcon,
+  Building2Icon, LayoutDashboardIcon, MapPinIcon, RouteIcon, SettingsIcon, TagIcon, UsersIcon,
 } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
@@ -49,13 +49,23 @@ const navMain = [
   },
 ];
 
+const navSuperadmin = {
+  title: 'Админы',
+  url: '/admin/admins',
+  icon: <UsersIcon />,
+};
+
 interface AppSidebarProps extends ComponentProps<typeof Sidebar> {
   user: { name: string; email: string };
+  isSuperadmin: boolean;
   onSignOut: () => Promise<void>;
 }
 
 export function AppSidebar(props: AppSidebarProps) {
-  const { user, onSignOut, ...sidebarProps } = props;
+  const {
+    user, isSuperadmin, onSignOut, ...sidebarProps
+  } = props;
+  const items = isSuperadmin ? [...navMain, navSuperadmin] : navMain;
 
   return (
     <Sidebar collapsible="offcanvas" {...sidebarProps}>
@@ -65,7 +75,7 @@ export function AppSidebar(props: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navMain} />
+        <NavMain items={items} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} onSignOut={onSignOut} />

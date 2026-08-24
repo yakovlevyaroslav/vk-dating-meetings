@@ -34,6 +34,7 @@ export default async function AdminShellLayout(props: AdminShellLayoutProps) {
           name: session?.user.name ?? 'Админ',
           email: session?.user.email ?? '',
         }}
+        isSuperadmin={session?.user.role === 'SUPERADMIN'}
         onSignOut={handleSignOut}
       />
       <SidebarInset>{children}</SidebarInset>

@@ -37,8 +37,13 @@ async function seedCities() {
 }
 
 async function seedAdminUser() {
-  const email = process.env.ADMIN_SEED_EMAIL ?? 'admin@example.com';
-  const password = process.env.ADMIN_SEED_PASSWORD ?? 'change-me-please';
+  const email = process.env.ADMIN_SEED_EMAIL;
+  const password = process.env.ADMIN_SEED_PASSWORD;
+
+  if (!email || !password) {
+    throw new Error('ADMIN_SEED_EMAIL и ADMIN_SEED_PASSWORD должны быть заданы в .env');
+  }
+
   const passwordHash = await bcrypt.hash(password, 10);
 
   await prisma.adminUser.upsert({
@@ -51,6 +56,7 @@ async function seedAdminUser() {
       email,
       passwordHash,
       name: 'Admin',
+      role: 'SUPERADMIN',
     },
   });
 
