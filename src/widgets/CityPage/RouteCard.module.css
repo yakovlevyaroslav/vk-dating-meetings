@@ -132,7 +132,6 @@
   }
 
   .stopsContainer__active .stopsInner {
-    border-radius: 24px;
     padding: var(--spacing-md);
   }
 }
