@@ -8,6 +8,10 @@ import './admin.css';
 
 export const metadata: Metadata = {
   title: 'Админка · VK Знакомства',
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 interface AdminLayoutProps {

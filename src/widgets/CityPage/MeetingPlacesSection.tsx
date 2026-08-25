@@ -249,7 +249,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                       ) : null}
                       <span className={styles.placeBody}>
                         <span className={styles.placeName}>
-                          {place.name} — {venue.name}
+                          {place.name}
                         </span>
                         {venue.address ? <span className={styles.placeAddress}>{venue.address}</span> : null}
                       </span>

@@ -56,6 +56,11 @@ export const metadata: Metadata = {
     template: '%s — Места неслучайных свиданий',
   },
   description: 'Места и маршруты для свиданий',
+  // TODO: убрать перед публичным запуском сайта
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 interface PublicRootLayoutProps {
