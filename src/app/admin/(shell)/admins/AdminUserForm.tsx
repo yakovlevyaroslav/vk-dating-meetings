@@ -35,9 +35,9 @@ export function AdminUserForm(props: AdminUserFormProps) {
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Логин</Label>
         {isNew ? (
-          <Input id="email" name="email" type="email" defaultValue={values.email} required />
+          <Input id="email" name="email" type="text" defaultValue={values.email} required />
         ) : (
           <Input id="email" value={values.email} disabled />
         )}

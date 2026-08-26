@@ -30,7 +30,7 @@ export default async function AdminAdminsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Email</TableHead>
+              <TableHead>Логин</TableHead>
               <TableHead>Имя</TableHead>
               <TableHead>Роль</TableHead>
               <TableHead>Создан</TableHead>

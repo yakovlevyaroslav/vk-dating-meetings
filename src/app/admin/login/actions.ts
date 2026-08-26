@@ -14,7 +14,7 @@ export async function authenticate(_prevState: string | undefined, formData: For
     return undefined;
   } catch (error) {
     if (error instanceof AuthError) {
-      return 'Неверный email или пароль';
+      return 'Неверный логин или пароль';
     }
     throw error;
   }

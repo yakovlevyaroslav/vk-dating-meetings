@@ -42,7 +42,7 @@ export async function createAdminUser(_prevState: string | undefined, formData: 
   const role = readRole(formData);
 
   if (!email || !password) {
-    return 'Заполните email и пароль';
+    return 'Заполните логин и пароль';
   }
   if (password.length < PASSWORD_MIN_LENGTH) {
     return `Пароль должен быть не короче ${PASSWORD_MIN_LENGTH} символов`;
@@ -55,7 +55,7 @@ export async function createAdminUser(_prevState: string | undefined, formData: 
   });
 
   if (existing) {
-    return 'Админ с таким email уже существует';
+    return 'Админ с таким логином уже существует';
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
