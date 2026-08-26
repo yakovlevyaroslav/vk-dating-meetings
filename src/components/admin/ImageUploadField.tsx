@@ -60,7 +60,12 @@ export function ImageUploadField(props: ImageUploadFieldProps) {
         // eslint-disable-next-line @next/next/no-img-element -- превью загруженного пользователем файла
         <img src={url} alt="" className="h-32 w-32 rounded-md border object-cover" />
       ) : null}
-      <Input id={inputId} type="file" accept="image/png,image/jpeg,image/webp" onChange={handleFileChange} />
+      <Input
+        id={inputId}
+        type="file"
+        accept="image/png,image/jpeg,image/webp,image/gif,image/avif"
+        onChange={handleFileChange}
+      />
       {isUploading ? <p className="text-sm text-muted-foreground">Загрузка…</p> : null}
     </div>
   );
