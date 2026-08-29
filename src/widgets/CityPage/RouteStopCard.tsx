@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import linkImage from '@/assets/images/ic-link.svg';
 import type { CityPageData } from '@/entities/city/getCityPageData';
 
 import styles from './RouteStopCard.module.css';
@@ -17,7 +18,7 @@ export function RouteStopCard(props: RouteStopCardProps) {
       <div className={styles.card}>
         {place.linkUrl ? (
           <a href={place.linkUrl} target="_blank" rel="noreferrer" className={styles.badge}>
-            <Image src="/images/ic-link.svg" alt="Открыть ссылку" width={16} height={16} loading="eager" quality={100} />
+            <Image src={linkImage} alt="Открыть ссылку" width={16} height={16} loading="eager" quality={100} />
           </a>
         ) : null}
         <span className={styles.title}>{place.name}</span>

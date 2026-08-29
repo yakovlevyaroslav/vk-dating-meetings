@@ -3,6 +3,12 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import btnCloseImage from '@/assets/images/btn-close.svg';
+import btnQrCodeImage from '@/assets/images/btn-qr-code.svg';
+import btnLinkImage from '@/assets/images/btn-link.svg';
+import qrCodeImage from '@/assets/images/qr-code.svg';
+import hearthBottomImage from '@/assets/images/3d-hearth-bottom.png';
+import starsImage from '@/assets/images/3d-stars-2x.png';
 import { classNames } from '@/shared/lib/classNames';
 
 import styles from './AppsSection.module.css';
@@ -50,7 +56,7 @@ export function AppsSection() {
                       aria-expanded={isOpen}
                     >
                       <Image
-                        src={isOpen ? '/images/btn-close.svg' : '/images/btn-qr-code.svg'}
+                        src={isOpen ? btnCloseImage : btnQrCodeImage}
                         alt={isOpen ? 'Скрыть QR-код' : 'Показать QR-код'}
                         width={32}
                         height={32}
@@ -60,7 +66,7 @@ export function AppsSection() {
                     </button>
                     <a href="#" target="_blank" rel="noreferrer" className={styles.iconButton}>
                       <Image
-                        src="/images/btn-link.svg"
+                        src={btnLinkImage}
                         alt={`Скачать в ${store}`}
                         width={32}
                         height={32}
@@ -73,7 +79,7 @@ export function AppsSection() {
                 <div className={classNames(styles.qrContainer, isOpen && styles.qrContainer__active)}>
                   <div className={styles.qrInner}>
                     <Image
-                      src="/images/qr-code.svg"
+                      src={qrCodeImage}
                       alt="QR-код для скачивания приложения"
                       width={140}
                       height={140}
@@ -90,8 +96,8 @@ export function AppsSection() {
           })}
         </ul>
 
-        <img loading="eager" src="/images/3d-hearth-bottom.png" alt="Image Heart" className={styles.imageHearth + ' ' + styles.image} />
-        <img loading="eager" src="/images/3d-stars-2x.png" alt="Image Stars" className={styles.imageStars + ' ' + styles.image} />
+        <img loading="eager" src={hearthBottomImage.src} alt="Image Heart" className={styles.imageHearth + ' ' + styles.image} />
+        <img loading="eager" src={starsImage.src} alt="Image Stars" className={styles.imageStars + ' ' + styles.image} />
       </div>
     </section>
   );

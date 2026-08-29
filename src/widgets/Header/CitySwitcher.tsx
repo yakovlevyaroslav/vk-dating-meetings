@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
+import arrowBottomImage from '@/assets/images/ic-arrow-bottom.svg';
+import checkImage from '@/assets/images/ic-check.svg';
 import { classNames } from '@/shared/lib/classNames';
 
 import styles from './Header.module.css';
@@ -56,7 +58,7 @@ export function CitySwitcher() {
       >
         {activeCity.label}
         <Image
-          src="/images/ic-arrow-bottom.svg"
+          src={arrowBottomImage}
           alt=""
           width={14}
           height={7}
@@ -81,7 +83,7 @@ export function CitySwitcher() {
                   {city.label}
                   {city.slug === activeCity.slug ? (
                     <Image
-                      src="/images/ic-check.svg"
+                      src={checkImage}
                       alt=""
                       width={18}
                       height={13}

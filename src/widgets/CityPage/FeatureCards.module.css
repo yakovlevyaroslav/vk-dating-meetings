@@ -20,19 +20,19 @@
 
 .card:nth-child(1) {
   background-color: #0F1F36;
-  background-image: url('/images/3d-check-main.png');
+  background-image: url('../../assets/images/3d-check-main.png');
 }
 
 .card:nth-child(2) {
   background-color: #0077FF;
-  background-image: url('/images/3d-hearth-main.png');
+  background-image: url('../../assets/images/3d-hearth-main.png');
   background-position: right center;
   background-repeat: no-repeat;
 }
 
 .card:nth-child(3) {
   background-color: #EB1F99;
-  background-image: url('/images/3d-gift-main.png');
+  background-image: url('../../assets/images/3d-gift-main.png');
 }
 
 .cardDescription {

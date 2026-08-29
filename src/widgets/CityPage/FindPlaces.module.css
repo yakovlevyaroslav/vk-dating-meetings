@@ -36,11 +36,11 @@
 }
 
 .card:nth-child(1) {
-  --card-photo: url('/images/places-card-1.jpg');
+  --card-photo: url('../../assets/images/places-card-1.jpg');
 }
 
 .card:nth-child(2) {
-  --card-photo: url('/images/places-card-2.jpg');
+  --card-photo: url('../../assets/images/places-card-2.jpg');
 }
 
 .cardTitle {

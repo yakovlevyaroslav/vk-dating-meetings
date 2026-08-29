@@ -1,3 +1,6 @@
+import pinImage from '@/assets/images/3d-pin-know.png';
+import flashImage from '@/assets/images/3d-flash-know.png';
+
 import styles from './SuggestionsSection.module.css';
 
 export function SuggestionsSection() {
@@ -9,8 +12,8 @@ export function SuggestionsSection() {
           места, о которых <br />
           мы не упомянули?
 
-          <img className={styles.image + ' ' + styles.imagePin} src="/images/3d-pin-know.png" alt="Image Pin" />
-          <img className={styles.image + ' ' + styles.imageFlash} src="/images/3d-flash-know.png" alt="Image Flash" />
+          <img className={styles.image + ' ' + styles.imagePin} src={pinImage.src} alt="Image Pin" />
+          <img className={styles.image + ' ' + styles.imageFlash} src={flashImage.src} alt="Image Flash" />
         </h2>
         <button className={styles.button}>
           Предложить место

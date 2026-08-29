@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import linkImage from '@/assets/images/ic-link.svg';
 import type { CityPageData } from '@/entities/city/getCityPageData';
 import { PromoBlock } from '@/shared/ui/PromoBlock/PromoBlock';
 
@@ -34,7 +35,7 @@ export function BonusCard(props: BonusCardProps) {
                 className={styles.link}
                 aria-label="Открыть ссылку"
               >
-                <Image src="/images/ic-link.svg" alt="" width={16} height={16} loading="eager" quality={100} />
+                <Image src={linkImage} alt="" width={16} height={16} loading="eager" quality={100} />
               </a>
             ) : null}
           </div>

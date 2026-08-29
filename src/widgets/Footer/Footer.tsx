@@ -1,5 +1,9 @@
 import Image from 'next/image';
 
+import maxImage from '@/assets/images/ic-sm-max.png';
+import vkImage from '@/assets/images/ic-sm-vk.svg';
+import tgImage from '@/assets/images/ic-sm-tg.svg';
+
 import styles from './Footer.module.css';
 
 export function Footer() {
@@ -9,17 +13,17 @@ export function Footer() {
         <ul className={styles.socials} aria-label="Мы в соцсетях">
           <li>
             <a href="#" className={styles.socialLink}>
-              <Image src="/images/ic-sm-max.png" alt="MAX" width={32} height={32} loading="eager" quality={100} />
+              <Image src={maxImage} alt="MAX" width={32} height={32} loading="eager" quality={100} />
             </a>
           </li>
           <li>
             <a href="#" className={styles.socialLink}>
-              <Image src="/images/ic-sm-vk.svg" alt="VK" width={32} height={32} loading="eager" quality={100} />
+              <Image src={vkImage} alt="VK" width={32} height={32} loading="eager" quality={100} />
             </a>
           </li>
           <li>
             <a href="#" className={styles.socialLink}>
-              <Image src="/images/ic-sm-tg.svg" alt="Telegram" width={32} height={32} loading="eager" quality={100} />
+              <Image src={tgImage} alt="Telegram" width={32} height={32} loading="eager" quality={100} />
             </a>
           </li>
         </ul>

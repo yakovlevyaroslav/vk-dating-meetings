@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import cardBadgeImage from '@/assets/images/ic-card-badge.svg';
+import copyImage from '@/assets/images/ic-copy.svg';
 import { classNames } from '@/shared/lib/classNames';
 
 import styles from './PromoBlock.module.css';
@@ -32,7 +34,7 @@ export function PromoBlock(props: PromoBlockProps) {
     <div className={styles.root}>
       <div className={styles.header}>
         <Image
-          src="/images/ic-card-badge.svg"
+          src={cardBadgeImage}
           alt="Есть бонус"
           width={32}
           height={32}
@@ -51,7 +53,7 @@ export function PromoBlock(props: PromoBlockProps) {
         >
           <span className={styles.code}>{promoCode}</span>
           <Image
-            src="/images/ic-copy.svg"
+            src={copyImage}
             alt=""
             width={16}
             height={16}

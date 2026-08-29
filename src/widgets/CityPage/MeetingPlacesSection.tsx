@@ -3,6 +3,10 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 
+import btnCloseImage from '@/assets/images/btn-close.svg';
+import icCloseImage from '@/assets/images/ic-close.svg';
+import cardBadgeImage from '@/assets/images/ic-card-badge.svg';
+import linkImage from '@/assets/images/ic-link.svg';
 import type { Category } from '@/entities/category/getCategories';
 import type { CityPageData } from '@/entities/city/getCityPageData';
 import { resolveVenuePromo } from '@/entities/place/resolvePlacePromo';
@@ -140,7 +144,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
 
       {isMobileOpen ? (
         <button type="button" className={styles.mobileCloseButton} onClick={closeMobile} aria-label="Закрыть">
-          <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" quality={100} />
+          <Image src={btnCloseImage} alt="" width={32} height={32} loading="eager" quality={100} />
         </button>
       ) : null}
 
@@ -214,7 +218,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 onClick={() => setNetworkFilterPlaceId(null)}
                 aria-label="Сбросить фильтр по сети"
               >
-                <Image src="/images/ic-close.svg" alt="" width={11} height={11} loading="eager" quality={100} />
+                <Image src={icCloseImage} alt="" width={11} height={11} loading="eager" quality={100} />
               </button>
             </div>
           ) : null}
@@ -239,7 +243,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                           <img src={place.thumbnailImage} alt={place.name} className={styles.placeImage} />
                           {venue.hasBonus || place.hasBonus ? (
                             <Image
-                              src="/images/ic-card-badge.svg"
+                              src={cardBadgeImage}
                               alt="Есть бонус"
                               width={32}
                               height={32}
@@ -284,7 +288,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 onClick={() => setSelectedVenueId(null)}
                 aria-label="Закрыть"
               >
-                <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" quality={100} />
+                <Image src={btnCloseImage} alt="" width={32} height={32} loading="eager" quality={100} />
               </button>
               {selectedEntry.place.largeImage ?? selectedEntry.place.thumbnailImage ? (
                 // eslint-disable-next-line @next/next/no-img-element -- контент загружается через админку, размеры заранее неизвестны
@@ -309,7 +313,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                     className={styles.detailLink}
                   >
                     Подробнее
-                    <Image src="/images/ic-link.svg" alt="" width={16} height={16} loading="eager" quality={100} />
+                    <Image src={linkImage} alt="" width={16} height={16} loading="eager" quality={100} />
                   </a>
                 ) : null}
                 {selectedEntry.place.venues.length > 1 ? (

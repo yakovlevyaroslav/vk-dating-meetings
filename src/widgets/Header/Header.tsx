@@ -6,6 +6,11 @@ import { usePathname } from 'next/navigation';
 import { XIcon } from 'lucide-react';
 import { useState } from 'react';
 
+import productLogoImage from '@/assets/images/ic-product-logo.svg';
+import logoImage from '@/assets/images/logo.svg';
+import btnMenuImage from '@/assets/images/btn-menu.svg';
+import btnCityImage from '@/assets/images/btn-city.svg';
+import checkImage from '@/assets/images/ic-check.svg';
 import { classNames } from '@/shared/lib/classNames';
 
 import { CITIES, CitySwitcher, getActiveCity } from './CitySwitcher';
@@ -39,7 +44,7 @@ export function Header() {
       <div className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Image
-            src="/images/ic-product-logo.svg"
+            src={productLogoImage}
             alt="VK Знакомства логотип"
             width={225}
             height={36}
@@ -49,7 +54,7 @@ export function Header() {
           />
         </div>
         <div className={styles.headerLogoMobile}>
-          <Image src="/images/logo.svg" alt="VK Знакомства логотип" width={28} height={28} priority quality={100} />
+          <Image src={logoImage} alt="VK Знакомства логотип" width={28} height={28} priority quality={100} />
         </div>
 
         <ul className={styles.menuList} aria-label="Меню">
@@ -76,7 +81,7 @@ export function Header() {
               <XIcon size={18} />
             </span>
           ) : (
-            <Image src="/images/btn-menu.svg" alt="" width={40} height={40} quality={100} />
+            <Image src={btnMenuImage} alt="" width={40} height={40} quality={100} />
           )}
         </button>
 
@@ -87,7 +92,7 @@ export function Header() {
           aria-expanded={openPanel === 'city'}
           aria-label="Выбор города"
         >
-          <Image src="/images/btn-city.svg" alt="" width={40} height={40} quality={100} />
+          <Image src={btnCityImage} alt="" width={40} height={40} quality={100} />
         </button>
 
         <a href="#apps" className={styles.downloadAppButton}>
@@ -125,7 +130,7 @@ export function Header() {
                   {city.label}
                   {city.slug === activeCity.slug ? (
                     <Image
-                      src="/images/ic-check.svg"
+                      src={checkImage}
                       alt=""
                       width={18}
                       height={13}

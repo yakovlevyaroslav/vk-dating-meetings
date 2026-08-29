@@ -3,6 +3,10 @@
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 
+import pinActiveImage from '@/assets/images/ic-map-pin--pink.svg';
+import pinBonusImage from '@/assets/images/ic-map-pin--with-badge.svg';
+import pinDefaultImage from '@/assets/images/ic-map-pin.svg';
+
 import styles from './YandexMap.module.css';
 
 const YANDEX_MAPS_API_KEY = process.env.NEXT_PUBLIC_YANDEX_MAPS_API_KEY;
@@ -28,12 +32,12 @@ interface YMapInstance {
 
 function getMarkerIconSrc(point: YandexMapPoint, isActive: boolean): string {
   if (isActive) {
-    return '/images/ic-map-pin--pink.svg';
+    return pinActiveImage.src;
   }
   if (point.hasBonus) {
-    return '/images/ic-map-pin--with-badge.svg';
+    return pinBonusImage.src;
   }
-  return '/images/ic-map-pin.svg';
+  return pinDefaultImage.src;
 }
 
 export function YandexMap(props: YandexMapProps) {
