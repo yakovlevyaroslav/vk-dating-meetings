@@ -15,7 +15,7 @@ export function Hero() {
         выбирайте, что вам ближе
       </p>
       <Image
-        src="/images/3d-stars.png"
+        src="/images/3d-stars-2x.png"
         alt="3D stars"
         width={368}
         height={461}
