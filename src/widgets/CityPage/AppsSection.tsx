@@ -55,16 +55,31 @@ export function AppsSection() {
                         width={32}
                         height={32}
                         loading="eager"
+                        quality={100}
                       />
                     </button>
                     <a href="#" target="_blank" rel="noreferrer" className={styles.iconButton}>
-                      <Image src="/images/btn-link.svg" alt={`Скачать в ${store}`} width={32} height={32} loading="eager" />
+                      <Image
+                        src="/images/btn-link.svg"
+                        alt={`Скачать в ${store}`}
+                        width={32}
+                        height={32}
+                        loading="eager"
+                        quality={100}
+                      />
                     </a>
                   </div>
                 </div>
                 <div className={classNames(styles.qrContainer, isOpen && styles.qrContainer__active)}>
                   <div className={styles.qrInner}>
-                    <Image src="/images/qr-code.svg" alt="QR-код для скачивания приложения" width={140} height={140} loading="eager" />
+                    <Image
+                      src="/images/qr-code.svg"
+                      alt="QR-код для скачивания приложения"
+                      width={140}
+                      height={140}
+                      loading="eager"
+                      quality={100}
+                    />
                     <p className={styles.qrDescription}>
                       Отсканируйте QR-код камерой своего смартфона, чтобы установить приложение
                     </p>
@@ -75,8 +90,8 @@ export function AppsSection() {
           })}
         </ul>
 
-        <img src="/images/3d-hearth-bottom.png" alt="Image Heart" className={styles.imageHearth + ' ' + styles.image} />
-        <img src="/images/3d-stars.png" alt="Image Stars" className={styles.imageStars + ' ' + styles.image} />
+        <img loading="eager" src="/images/3d-hearth-bottom.png" alt="Image Heart" className={styles.imageHearth + ' ' + styles.image} />
+        <img loading="eager" src="/images/3d-stars-2x.png" alt="Image Stars" className={styles.imageStars + ' ' + styles.image} />
       </div>
     </section>
   );

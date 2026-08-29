@@ -31,7 +31,15 @@ export function PromoBlock(props: PromoBlockProps) {
   return (
     <div className={styles.root}>
       <div className={styles.header}>
-        <Image src="/images/ic-card-badge.svg" alt="Есть бонус" width={32} height={32} className={styles.badge} loading="eager" />
+        <Image
+          src="/images/ic-card-badge.svg"
+          alt="Есть бонус"
+          width={32}
+          height={32}
+          className={styles.badge}
+          loading="eager"
+          quality={100}
+        />
         {promoDescription ? <span className={styles.description}>{promoDescription}</span> : null}
       </div>
       {promoCode ? (
@@ -49,6 +57,7 @@ export function PromoBlock(props: PromoBlockProps) {
             height={16}
             className={classNames(styles.copyIcon, copyIconClassName)}
             loading="eager"
+            quality={100}
           />
         </button>
       ) : null}

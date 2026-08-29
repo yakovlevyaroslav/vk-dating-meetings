@@ -17,7 +17,7 @@ export function RouteStopCard(props: RouteStopCardProps) {
       <div className={styles.card}>
         {place.linkUrl ? (
           <a href={place.linkUrl} target="_blank" rel="noreferrer" className={styles.badge}>
-            <Image src="/images/ic-link.svg" alt="Открыть ссылку" width={16} height={16} loading="eager" />
+            <Image src="/images/ic-link.svg" alt="Открыть ссылку" width={16} height={16} loading="eager" quality={100} />
           </a>
         ) : null}
         <span className={styles.title}>{place.name}</span>

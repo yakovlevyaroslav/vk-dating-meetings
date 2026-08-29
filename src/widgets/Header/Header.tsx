@@ -44,11 +44,12 @@ export function Header() {
             width={225}
             height={36}
             priority
+            quality={100}
             className={styles.logoIcon}
           />
         </div>
         <div className={styles.headerLogoMobile}>
-          <Image src="/images/logo.svg" alt="VK Знакомства логотип" width={28} height={28} priority />
+          <Image src="/images/logo.svg" alt="VK Знакомства логотип" width={28} height={28} priority quality={100} />
         </div>
 
         <ul className={styles.menuList} aria-label="Меню">
@@ -75,7 +76,7 @@ export function Header() {
               <XIcon size={18} />
             </span>
           ) : (
-            <Image src="/images/btn-menu.svg" alt="" width={40} height={40} />
+            <Image src="/images/btn-menu.svg" alt="" width={40} height={40} quality={100} />
           )}
         </button>
 
@@ -86,7 +87,7 @@ export function Header() {
           aria-expanded={openPanel === 'city'}
           aria-label="Выбор города"
         >
-          <Image src="/images/btn-city.svg" alt="" width={40} height={40} />
+          <Image src="/images/btn-city.svg" alt="" width={40} height={40} quality={100} />
         </button>
 
         <a href="#apps" className={styles.downloadAppButton}>
@@ -129,6 +130,7 @@ export function Header() {
                       width={18}
                       height={13}
                       className={styles.dropdownCityCheck}
+                      quality={100}
                     />
                   ) : null}
                 </Link>

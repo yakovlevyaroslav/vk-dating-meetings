@@ -21,6 +21,7 @@ export function Hero() {
         height={461}
         className={styles.imageStars}
         priority
+        quality={100}
       />
       <Image
         src="/images/3d-pin-main.png"
@@ -29,6 +30,7 @@ export function Hero() {
         height={267}
         className={styles.imagePin}
         priority
+        quality={100}
       />
       <div className={styles.lighterBackground} />
 

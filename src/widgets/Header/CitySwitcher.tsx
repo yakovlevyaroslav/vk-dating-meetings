@@ -61,6 +61,7 @@ export function CitySwitcher() {
           width={14}
           height={7}
           className={classNames(styles.citySwitcherArrow, isOpen && styles.citySwitcherArrow__open)}
+          quality={100}
         />
       </button>
 
@@ -85,6 +86,7 @@ export function CitySwitcher() {
                       width={18}
                       height={13}
                       className={styles.dropdownCityCheck}
+                      quality={100}
                     />
                   ) : null}
                 </Link>

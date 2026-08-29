@@ -9,17 +9,17 @@ export function Footer() {
         <ul className={styles.socials} aria-label="Мы в соцсетях">
           <li>
             <a href="#" className={styles.socialLink}>
-              <Image src="/images/ic-sm-max.png" alt="MAX" width={32} height={32} loading="eager" />
+              <Image src="/images/ic-sm-max.png" alt="MAX" width={32} height={32} loading="eager" quality={100} />
             </a>
           </li>
           <li>
             <a href="#" className={styles.socialLink}>
-              <Image src="/images/ic-sm-vk.svg" alt="VK" width={32} height={32} loading="eager" />
+              <Image src="/images/ic-sm-vk.svg" alt="VK" width={32} height={32} loading="eager" quality={100} />
             </a>
           </li>
           <li>
             <a href="#" className={styles.socialLink}>
-              <Image src="/images/ic-sm-tg.svg" alt="Telegram" width={32} height={32} loading="eager" />
+              <Image src="/images/ic-sm-tg.svg" alt="Telegram" width={32} height={32} loading="eager" quality={100} />
             </a>
           </li>
         </ul>

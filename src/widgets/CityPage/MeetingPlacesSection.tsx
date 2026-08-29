@@ -140,7 +140,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
 
       {isMobileOpen ? (
         <button type="button" className={styles.mobileCloseButton} onClick={closeMobile} aria-label="Закрыть">
-          <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" />
+          <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" quality={100} />
         </button>
       ) : null}
 
@@ -214,7 +214,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 onClick={() => setNetworkFilterPlaceId(null)}
                 aria-label="Сбросить фильтр по сети"
               >
-                <Image src="/images/ic-close.svg" alt="" width={11} height={11} loading="eager" />
+                <Image src="/images/ic-close.svg" alt="" width={11} height={11} loading="eager" quality={100} />
               </button>
             </div>
           ) : null}
@@ -245,6 +245,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                               height={32}
                               className={styles.placeBonusBadge}
                               loading="eager"
+                              quality={100}
                             />
                           ) : null}
                         </span>
@@ -283,7 +284,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 onClick={() => setSelectedVenueId(null)}
                 aria-label="Закрыть"
               >
-                <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" />
+                <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" quality={100} />
               </button>
               {selectedEntry.place.largeImage ?? selectedEntry.place.thumbnailImage ? (
                 // eslint-disable-next-line @next/next/no-img-element -- контент загружается через админку, размеры заранее неизвестны
@@ -308,7 +309,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                     className={styles.detailLink}
                   >
                     Подробнее
-                    <Image src="/images/ic-link.svg" alt="" width={16} height={16} loading="eager" />
+                    <Image src="/images/ic-link.svg" alt="" width={16} height={16} loading="eager" quality={100} />
                   </a>
                 ) : null}
                 {selectedEntry.place.venues.length > 1 ? (
