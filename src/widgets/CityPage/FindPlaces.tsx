@@ -12,7 +12,7 @@ export function FindPlaces() {
         <li className={styles.card}>
           <h3 className={styles.cardTitle}>В городе</h3>
           <p className={styles.cardSubtitle}>
-            Ищите яркие наклейки с наградой — обычно их размещают на двери или витрине
+            Ищите яркие наклейки с наградой — обычно их&nbsp;размещают на двери или витрине
           </p>
         </li>
       </ul>

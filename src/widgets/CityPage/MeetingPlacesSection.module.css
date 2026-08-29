@@ -2,6 +2,7 @@
   width: 100%;
   scroll-margin-top: 136px;
   margin-top: 120px;
+  z-index: 1;
 }
 
 .title {
@@ -265,6 +266,10 @@
   box-shadow: 0 12px 32px rgba(15, 31, 54, 0.16);
   transform: translateY(-50%);
   padding: var(--spacing-sm);
+}
+
+.detailCard__noPromo {
+  border-radius: var(--spacing-llg) var(--spacing-llg) var(--spacing-lg) var(--spacing-lg);
 }
 
 .detailClose {

@@ -78,6 +78,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
 
   const selectedEntry = venueEntries.find((entry) => entry.venue.id === selectedVenueId) ?? null;
   const resolvedPromo = selectedEntry ? resolveVenuePromo(selectedEntry.place, selectedEntry.venue) : null;
+  const hasPromo = Boolean(resolvedPromo?.promoDescription || resolvedPromo?.promoCode);
 
   const activePointIds = useMemo(
     () => new Set(selectedVenueId ? [selectedVenueId] : []),
@@ -139,7 +140,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
 
       {isMobileOpen ? (
         <button type="button" className={styles.mobileCloseButton} onClick={closeMobile} aria-label="Закрыть">
-          <Image src="/images/btn-close.svg" alt="" width={32} height={32} />
+          <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" />
         </button>
       ) : null}
 
@@ -213,7 +214,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 onClick={() => setNetworkFilterPlaceId(null)}
                 aria-label="Сбросить фильтр по сети"
               >
-                <Image src="/images/ic-close.svg" alt="" width={11} height={11} />
+                <Image src="/images/ic-close.svg" alt="" width={11} height={11} loading="eager" />
               </button>
             </div>
           ) : null}
@@ -243,6 +244,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                               width={32}
                               height={32}
                               className={styles.placeBonusBadge}
+                              loading="eager"
                             />
                           ) : null}
                         </span>
@@ -274,14 +276,14 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
           )}
 
           {selectedEntry ? (
-            <div className={styles.detailCard}>
+            <div className={classNames(styles.detailCard, !hasPromo && styles.detailCard__noPromo)}>
               <button
                 type="button"
                 className={styles.detailClose}
                 onClick={() => setSelectedVenueId(null)}
                 aria-label="Закрыть"
               >
-                <Image src="/images/btn-close.svg" alt="" width={32} height={32} />
+                <Image src="/images/btn-close.svg" alt="" width={32} height={32} loading="eager" />
               </button>
               {selectedEntry.place.largeImage ?? selectedEntry.place.thumbnailImage ? (
                 // eslint-disable-next-line @next/next/no-img-element -- контент загружается через админку, размеры заранее неизвестны
@@ -306,7 +308,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                     className={styles.detailLink}
                   >
                     Подробнее
-                    <Image src="/images/ic-link.svg" alt="" width={16} height={16} />
+                    <Image src="/images/ic-link.svg" alt="" width={16} height={16} loading="eager" />
                   </a>
                 ) : null}
                 {selectedEntry.place.venues.length > 1 ? (

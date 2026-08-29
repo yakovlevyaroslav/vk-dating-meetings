@@ -3,9 +3,10 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
-  padding: 156px 0;
+  padding: 156px 0 120px;
   text-align: center;
   position: relative;
+  z-index: 1;
 }
 
 .title {
@@ -45,7 +46,7 @@
   filter: blur(120px);
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -55%);
   background-color: white;
   z-index: -1;
 }
@@ -109,5 +110,11 @@
     padding: 0 30px;
     margin-top: 24px;
     margin-bottom: 24px;
+  }
+
+  .lighterBackground {
+    width: 444px;
+    height: 672px;
+    border-radius: 672px;
   }
 }

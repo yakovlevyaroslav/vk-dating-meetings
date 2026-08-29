@@ -1,6 +1,7 @@
 .root {
   width: 100%;
   position: relative;
+  z-index: 1;
 }
 
 .lighterBackground {
@@ -47,7 +48,7 @@
 
 .link {
   font-size: 12px;
-  color: var(---color-silver);
+  color: var(--color-gray-500);
   transition: color 0.3s ease-in-out;
   text-decoration: underline;
 }

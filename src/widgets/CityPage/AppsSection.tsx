@@ -54,16 +54,17 @@ export function AppsSection() {
                         alt={isOpen ? 'Скрыть QR-код' : 'Показать QR-код'}
                         width={32}
                         height={32}
+                        loading="eager"
                       />
                     </button>
                     <a href="#" target="_blank" rel="noreferrer" className={styles.iconButton}>
-                      <Image src="/images/btn-link.svg" alt={`Скачать в ${store}`} width={32} height={32} />
+                      <Image src="/images/btn-link.svg" alt={`Скачать в ${store}`} width={32} height={32} loading="eager" />
                     </a>
                   </div>
                 </div>
                 <div className={classNames(styles.qrContainer, isOpen && styles.qrContainer__active)}>
                   <div className={styles.qrInner}>
-                    <Image src="/images/qr-code.svg" alt="QR-код для скачивания приложения" width={140} height={140} />
+                    <Image src="/images/qr-code.svg" alt="QR-код для скачивания приложения" width={140} height={140} loading="eager" />
                     <p className={styles.qrDescription}>
                       Отсканируйте QR-код камерой своего смартфона, чтобы установить приложение
                     </p>

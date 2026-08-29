@@ -34,7 +34,7 @@ export function BonusCard(props: BonusCardProps) {
                 className={styles.link}
                 aria-label="Открыть ссылку"
               >
-                <Image src="/images/ic-link.svg" alt="" width={16} height={16} />
+                <Image src="/images/ic-link.svg" alt="" width={16} height={16} loading="eager" />
               </a>
             ) : null}
           </div>

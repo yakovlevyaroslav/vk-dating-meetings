@@ -73,10 +73,10 @@ export default function PublicRootLayout(props: PublicRootLayoutProps) {
   return (
     <html lang="ru" className={`${vkSansDisplay.variable} ${vkSansDisplayCondensed.variable}`}>
       <body>
-        <BackgroundLines />
         <Header />
         {children}
         <Footer />
+        <BackgroundLines />
         <Trackers />
       </body>
     </html>

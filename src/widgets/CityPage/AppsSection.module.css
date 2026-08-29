@@ -2,6 +2,7 @@
   width: 100%;
   padding-top: 170px;
   scroll-margin-top: 136px;
+  z-index: 2;
 }
 
 .content {
@@ -147,14 +148,14 @@
 }
 
 .imageHearth {
-  top: -90px;
-  /* right: -330px; */
-  right: -460px;
-  transform: rotate(-50deg);
-  width: 545px;
-  height: 682px;
+  width: 287px;
+  height: 268px;
   object-fit: contain;
-  z-index: -1;
+  z-index: 1;
+  
+  top: 100px;
+  right: -165px;
+  transform: rotate(0deg);
 }
 
 @media (max-width: 799px) {
