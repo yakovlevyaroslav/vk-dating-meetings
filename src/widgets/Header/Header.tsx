@@ -41,6 +41,7 @@ export function Header() {
 
   return (
     <header className={styles.root}>
+      {/* <div className={styles.headerGradientContainer}></div> */}
       <div className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Image

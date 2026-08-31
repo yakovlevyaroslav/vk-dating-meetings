@@ -39,7 +39,20 @@ export function BonusCard(props: BonusCardProps) {
               </a>
             ) : null}
           </div>
-          <span className={styles.title}>{place.name}</span>
+          <span className={styles.title}>{place.name}
+
+            {place.linkUrl ? (
+                <a
+                  href={place.linkUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.titleLink}
+                  aria-label="Открыть ссылку"
+                >
+                  <Image src={linkImage} alt="" width={16} height={16} loading="eager" quality={100} />
+                </a>
+              ) : null}
+          </span>
           <p className={styles.description}>{place.description}</p>
           <PromoBlock
             promoDescription={promoDescription}

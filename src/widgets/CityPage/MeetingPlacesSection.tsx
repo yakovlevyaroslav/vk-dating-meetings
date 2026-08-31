@@ -98,9 +98,11 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
     const previousBodyOverflow = document.body.style.overflow;
     html.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('map-popup-open');
     return () => {
       html.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
+      document.body.classList.remove('map-popup-open');
     };
   }, [isMobileOpen]);
 

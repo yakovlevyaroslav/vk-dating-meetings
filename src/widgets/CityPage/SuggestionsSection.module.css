@@ -27,6 +27,9 @@
 
 .button {
   composes: baseButton from '../../shared/styles/base.module.css';
+  font-size: 16px;
+  height: 52px;
+  padding: 14px 24px;
 }
 
 .lighterBackground {
@@ -91,5 +94,12 @@
     height: 165px;
     bottom: -120px;
     right: -70px;
+  }
+
+  .lighterBackground {
+    width: 402px;
+    height: 446px;
+    border-radius: 436px;
+    filter: blur(60px);
   }
 }

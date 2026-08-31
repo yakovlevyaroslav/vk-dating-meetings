@@ -159,6 +159,11 @@
 }
 
 @media (max-width: 799px) {
+
+  .imageHearth {
+    z-index: -1;
+  }
+
   .root {
     padding-top: 120px;
   }

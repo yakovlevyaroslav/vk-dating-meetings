@@ -5,6 +5,10 @@
   z-index: 1;
 }
 
+.root:has(.interactive__mobileOpen) {
+  z-index: auto;
+}
+
 .title {
   composes: blockTitle from '@/shared/styles/base.module.css';
   margin-bottom: var(--spacing-xxl);

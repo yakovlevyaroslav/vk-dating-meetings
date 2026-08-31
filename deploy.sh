@@ -20,6 +20,7 @@ echo "Генерирую Prisma Client..."
 npx prisma generate
 
 echo "Собираю проект..."
+export NEXT_DEPLOYMENT_ID="$(git rev-parse --short HEAD)"
 yarn build
 
 echo "Перезапускаю приложение..."
