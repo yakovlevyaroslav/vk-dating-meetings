@@ -386,6 +386,10 @@
   height: 36px;
 }
 
+.detailLink.detailLink__first {
+  margin-top: var(--spacing-md);
+}
+
 @media (max-width: 799px) {
 
   .root {
