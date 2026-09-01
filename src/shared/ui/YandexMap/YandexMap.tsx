@@ -141,7 +141,7 @@ export function YandexMap(props: YandexMapProps) {
 
   if (!YANDEX_MAPS_API_KEY) {
     return (
-      <div className={`${styles.root} ${className ?? ''}`}>
+      <div className={`${styles.root} ${styles.map} ${className ?? ''}`}>
         <p className={styles.placeholder}>Не задан NEXT_PUBLIC_YANDEX_MAPS_API_KEY</p>
       </div>
     );
@@ -154,7 +154,7 @@ export function YandexMap(props: YandexMapProps) {
         strategy="afterInteractive"
         onLoad={() => setIsScriptLoaded(true)}
       />
-      <div ref={containerRef} className={`${styles.root} ${className ?? ''}`} />
+      <div ref={containerRef} className={`${styles.root} ${styles.map} ${className ?? ''}`} />
     </>
   );
 }

@@ -33,4 +33,8 @@
   .root {
     border-radius: 32px 32px 0 0;
   }
+
+  :global(body.map-popup-open) .map {
+    height: 110% !important;
+  }
 }

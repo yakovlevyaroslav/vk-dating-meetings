@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import maxImage from '@/assets/images/ic-sm-max.png';
+import maxImage from '@/assets/images/ic-sm-max.svg';
 import vkImage from '@/assets/images/ic-sm-vk.svg';
 import tgImage from '@/assets/images/ic-sm-tg.svg';
 

@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
+import btnCloseImageGray from '@/assets/images/btn-close-gray.svg';
 import btnCloseImage from '@/assets/images/btn-close.svg';
 import icCloseImage from '@/assets/images/ic-close.svg';
 import cardBadgeImage from '@/assets/images/ic-card-badge.svg';
@@ -26,6 +27,19 @@ interface VenueEntry {
   venue: CityPageData['places'][number]['venues'][number];
 }
 
+// Значения должны совпадать с высотами .filters в MeetingPlacesSection.module.css
+// (свёрнутое состояние и отступ снизу у развёрнутого calc(100% - 96px))
+const FILTERS_MIN_HEIGHT = 330;
+const FILTERS_BOTTOM_INSET = 96;
+const DRAG_TAP_THRESHOLD = 6;
+
+interface FiltersDragState {
+  startY: number;
+  startHeight: number;
+  maxHeight: number;
+  lastHeight: number;
+}
+
 export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
   const { places, categories } = props;
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
@@ -33,6 +47,11 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
   const [networkFilterPlaceId, setNetworkFilterPlaceId] = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
+  const [filtersDragHeight, setFiltersDragHeight] = useState<number | null>(null);
+  const interactiveRef = useRef<HTMLDivElement>(null);
+  const filtersRef = useRef<HTMLDivElement>(null);
+  const filtersDragStateRef = useRef<FiltersDragState | null>(null);
+  const suppressFiltersHandleClickRef = useRef(false);
 
   const availableCategories = useMemo(() => {
     const usedCategoryIds = new Set(
@@ -137,6 +156,63 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
     setIsFiltersExpanded((prev) => !prev);
   }
 
+  function handleFiltersHandleClick() {
+    if (suppressFiltersHandleClickRef.current) {
+      suppressFiltersHandleClickRef.current = false;
+      return;
+    }
+    toggleFiltersExpanded();
+  }
+
+  function handleFiltersHandlePointerDown(event: React.PointerEvent<HTMLButtonElement>) {
+    if (!filtersRef.current || !interactiveRef.current) {
+      return;
+    }
+    event.currentTarget.setPointerCapture(event.pointerId);
+    const startHeight = filtersRef.current.getBoundingClientRect().height;
+    const containerHeight = interactiveRef.current.getBoundingClientRect().height;
+    filtersDragStateRef.current = {
+      startY: event.clientY,
+      startHeight,
+      maxHeight: containerHeight - FILTERS_BOTTOM_INSET,
+      lastHeight: startHeight,
+    };
+    setFiltersDragHeight(startHeight);
+  }
+
+  function handleFiltersHandlePointerMove(event: React.PointerEvent<HTMLButtonElement>) {
+    const dragState = filtersDragStateRef.current;
+    if (!dragState) {
+      return;
+    }
+    const delta = dragState.startY - event.clientY;
+    const nextHeight = Math.min(dragState.maxHeight, Math.max(FILTERS_MIN_HEIGHT, dragState.startHeight + delta));
+    dragState.lastHeight = nextHeight;
+    setFiltersDragHeight(nextHeight);
+  }
+
+  function handleFiltersHandlePointerUp(event: React.PointerEvent<HTMLButtonElement>) {
+    const dragState = filtersDragStateRef.current;
+    if (!dragState) {
+      return;
+    }
+    const totalMovement = Math.abs(event.clientY - dragState.startY);
+    if (totalMovement < DRAG_TAP_THRESHOLD) {
+      toggleFiltersExpanded();
+    } else {
+      const midpoint = (FILTERS_MIN_HEIGHT + dragState.maxHeight) / 2;
+      setIsFiltersExpanded(dragState.lastHeight > midpoint);
+    }
+    suppressFiltersHandleClickRef.current = true;
+    filtersDragStateRef.current = null;
+    setFiltersDragHeight(null);
+  }
+
+  function handleFiltersHandlePointerCancel() {
+    filtersDragStateRef.current = null;
+    setFiltersDragHeight(null);
+  }
+
   return (
     <section id="places" className={styles.root}>
       <h2 className={styles.title}>Места на карте</h2>
@@ -151,6 +227,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
       ) : null}
 
       <div
+        ref={interactiveRef}
         className={classNames(
           styles.interactive,
           isMobileOpen && styles.interactive__mobileOpen,
@@ -167,11 +244,21 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
           />
         ) : null}
 
-        <div className={styles.filters}>
+        <div
+          ref={filtersRef}
+          className={styles.filters}
+          style={filtersDragHeight !== null ? {
+            height: `${filtersDragHeight}px`, transition: 'none',
+          } : undefined}
+        >
           <button
             type="button"
             className={styles.filtersHandle}
-            onClick={toggleFiltersExpanded}
+            onClick={handleFiltersHandleClick}
+            onPointerDown={handleFiltersHandlePointerDown}
+            onPointerMove={handleFiltersHandlePointerMove}
+            onPointerUp={handleFiltersHandlePointerUp}
+            onPointerCancel={handleFiltersHandlePointerCancel}
             aria-expanded={isFiltersExpanded}
             aria-label={isFiltersExpanded ? 'Свернуть список мест' : 'Развернуть список мест'}
           >
@@ -290,7 +377,24 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 onClick={() => setSelectedVenueId(null)}
                 aria-label="Закрыть"
               >
-                <Image src={btnCloseImage} alt="" width={32} height={32} loading="eager" quality={100} />
+                <Image
+                  src={btnCloseImage}
+                  alt=""
+                  width={32}
+                  height={32}
+                  className={styles.detailCloseIcon}
+                  loading="eager"
+                  quality={100}
+                />
+                <Image
+                  src={btnCloseImageGray}
+                  alt=""
+                  width={32}
+                  height={32}
+                  className={styles.detailCloseIconMobile}
+                  loading="eager"
+                  quality={100}
+                />
               </button>
               {selectedEntry.place.largeImage ?? selectedEntry.place.thumbnailImage ? (
                 // eslint-disable-next-line @next/next/no-img-element -- контент загружается через админку, размеры заранее неизвестны
@@ -307,12 +411,16 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                 {resolvedPromo?.description ? (
                   <p className={styles.detailDescription}>{resolvedPromo.description}</p>
                 ) : null}
+                {selectedEntry.venue.address ? (
+                  <p className={styles.detailAddress}>{selectedEntry.venue.address}</p>
+                ) : null}
                 {selectedEntry.place.linkUrl ? (
                   <a
                     href={selectedEntry.place.linkUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className={styles.detailLink}
+                    className={classNames(styles.detailLink, styles.detailLink__first)}
+                    aria-label="Подробнее о месте"
                   >
                     Подробнее
                     <Image src={linkImage} alt="" width={16} height={16} loading="eager" quality={100} />

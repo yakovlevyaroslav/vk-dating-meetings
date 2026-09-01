@@ -67,7 +67,7 @@
 @media (max-width: 799px) {
   .root {
     margin-top: var(--spacing-md);
-    border-radius: var(--spacing-lg);
+    border-radius: var(--spacing-llg);
   }
 
   .codeRow {
