@@ -15,9 +15,10 @@ export function SuggestionsSection() {
           <img className={styles.image + ' ' + styles.imagePin} src={pinImage.src} alt="Image Pin" />
           <img className={styles.image + ' ' + styles.imageFlash} src={flashImage.src} alt="Image Flash" />
         </h2>
-        <button className={styles.button}>
+        {/* TODO: заменить на реальную ссылку для предложения места */}
+        <a href="https://app.pthwy.ru/hUvS0" target="_blank" rel="noreferrer" className={styles.button}>
           Предложить место
-        </button>
+        </a>
         <div className={styles.lighterBackground} />
       </div>
     </section>

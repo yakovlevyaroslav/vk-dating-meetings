@@ -7,6 +7,7 @@ import { CityPage } from '@/widgets/CityPage/CityPage';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
+  title: 'Места для свиданий от VK Знакомств',
   alternates: {
     canonical: '/moscow',
   },
