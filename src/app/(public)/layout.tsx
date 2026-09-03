@@ -51,11 +51,8 @@ const vkSansDisplayCondensed = localFont({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Места неслучайных свиданий',
-    template: '%s — Места неслучайных свиданий',
-  },
-  description: 'Места и маршруты для свиданий',
+  title: 'Места для свиданий от VK Знакомств',
+  description: 'Найдите, где провести свидание, с подборкой мест от VK Знакомств',
   // TODO: убрать перед публичным запуском сайта
   robots: {
     index: false,

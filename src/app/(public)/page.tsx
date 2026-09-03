@@ -7,7 +7,6 @@ import { CityPage } from '@/widgets/CityPage/CityPage';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Москва',
   alternates: {
     canonical: '/moscow',
   },
