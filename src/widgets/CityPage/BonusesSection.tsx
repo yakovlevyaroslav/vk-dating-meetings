@@ -10,7 +10,7 @@ interface BonusesSectionProps {
 
 interface BonusEntry {
   place: CityPageData['places'][number];
-  venueId: string;
+  venue: CityPageData['places'][number]['venues'][number];
   promoDescription: string | null;
   promoCode: string | null;
 }
@@ -30,7 +30,7 @@ export function BonusesSection(props: BonusesSectionProps) {
       }
       entries.push({
         place,
-        venueId: venue.id,
+        venue,
         promoDescription: resolved.promoDescription,
         promoCode: resolved.promoCode,
       });
@@ -49,8 +49,13 @@ export function BonusesSection(props: BonusesSectionProps) {
       </p>
       <ul className={styles.list}>
         {entries.map((entry) => (
-          <li key={entry.venueId} className={styles.listItem}>
-            <BonusCard place={entry.place} promoDescription={entry.promoDescription} promoCode={entry.promoCode} />
+          <li key={entry.venue.id} className={styles.listItem}>
+            <BonusCard
+              place={entry.place}
+              venue={entry.venue}
+              promoDescription={entry.promoDescription}
+              promoCode={entry.promoCode}
+            />
           </li>
         ))}
       </ul>

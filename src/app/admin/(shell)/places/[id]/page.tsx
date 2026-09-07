@@ -71,6 +71,7 @@ export default async function EditPlacePage(props: EditPlacePageProps) {
             hasBonus: place.hasBonus,
             venues: place.venues.map((venue) => ({
               id: venue.id,
+              clientKey: venue.id,
               name: venue.name,
               address: venue.address ?? '',
               latitude: String(venue.latitude),
@@ -81,6 +82,8 @@ export default async function EditPlacePage(props: EditPlacePageProps) {
               description: venue.description ?? '',
               promoDescription: venue.promoDescription ?? '',
               promoCode: venue.promoCode ?? '',
+              thumbnailImage: venue.thumbnailImage ?? '',
+              largeImage: venue.largeImage ?? '',
             })),
           }}
         />

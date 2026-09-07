@@ -10,6 +10,7 @@ import cardBadgeImage from '@/assets/images/ic-card-badge.svg';
 import linkImage from '@/assets/images/ic-link.svg';
 import type { Category } from '@/entities/category/getCategories';
 import type { CityPageData } from '@/entities/city/getCityPageData';
+import { resolveVenueImages } from '@/entities/place/resolveVenueImages';
 import { resolveVenuePromo } from '@/entities/place/resolvePlacePromo';
 import { classNames } from '@/shared/lib/classNames';
 import { PromoBlock } from '@/shared/ui/PromoBlock/PromoBlock';
@@ -101,6 +102,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
 
   const selectedEntry = venueEntries.find((entry) => entry.venue.id === selectedVenueId) ?? null;
   const resolvedPromo = selectedEntry ? resolveVenuePromo(selectedEntry.place, selectedEntry.venue) : null;
+  const resolvedDetailImages = selectedEntry ? resolveVenueImages(selectedEntry.place, selectedEntry.venue) : null;
   const hasPromo = Boolean(resolvedPromo?.promoDescription || resolvedPromo?.promoCode);
 
   const activePointIds = useMemo(
@@ -318,6 +320,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
             <ul className={styles.placeList}>
               {venueEntries.map(({ place, venue }) => {
                 const isSelected = venue.id === selectedVenueId;
+                const resolvedImages = resolveVenueImages(place, venue);
 
                 return (
                   <li key={venue.id}>
@@ -326,10 +329,10 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                       className={classNames(styles.placeItem, isSelected && styles.placeItem__active)}
                       onClick={() => selectVenue(venue.id)}
                     >
-                      {place.thumbnailImage ? (
+                      {resolvedImages.thumbnailImage ? (
                         <span className={styles.placeImageWrapper}>
                           {/* eslint-disable-next-line @next/next/no-img-element -- контент загружается через админку, размеры заранее неизвестны */}
-                          <img src={place.thumbnailImage} alt={place.name} className={styles.placeImage} />
+                          <img src={resolvedImages.thumbnailImage} alt={place.name} className={styles.placeImage} />
                           {venue.hasBonus || place.hasBonus ? (
                             <Image
                               src={cardBadgeImage}
@@ -396,10 +399,10 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
                   quality={100}
                 />
               </button>
-              {selectedEntry.place.largeImage ?? selectedEntry.place.thumbnailImage ? (
+              {resolvedDetailImages?.largeImage ?? resolvedDetailImages?.thumbnailImage ? (
                 // eslint-disable-next-line @next/next/no-img-element -- контент загружается через админку, размеры заранее неизвестны
                 <img
-                  src={selectedEntry.place.largeImage ?? selectedEntry.place.thumbnailImage ?? ''}
+                  src={resolvedDetailImages.largeImage ?? resolvedDetailImages.thumbnailImage ?? ''}
                   alt={selectedEntry.place.name}
                   className={styles.detailImage}
                 />

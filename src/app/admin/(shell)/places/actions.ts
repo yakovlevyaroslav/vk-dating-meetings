@@ -19,6 +19,8 @@ interface VenueInput {
   description: string;
   promoDescription: string;
   promoCode: string;
+  thumbnailImage: string;
+  largeImage: string;
 }
 
 function venueData(venue: VenueInput) {
@@ -33,6 +35,8 @@ function venueData(venue: VenueInput) {
     description: venue.description.trim() || null,
     promoDescription: venue.promoDescription.trim() || null,
     promoCode: venue.promoCode.trim() || null,
+    thumbnailImage: venue.thumbnailImage.trim() || null,
+    largeImage: venue.largeImage.trim() || null,
   };
 }
 

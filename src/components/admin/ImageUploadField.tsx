@@ -11,10 +11,13 @@ interface ImageUploadFieldProps {
   label: string;
   folder: string;
   defaultValue?: string | null;
+  onChange?: (url: string) => void;
 }
 
 export function ImageUploadField(props: ImageUploadFieldProps) {
-  const { name, label, folder, defaultValue } = props;
+  const {
+    name, label, folder, defaultValue, onChange,
+  } = props;
   const [url, setUrl] = useState(defaultValue ?? '');
   const [isUploading, setIsUploading] = useState(false);
   const inputId = `${name}-file`;
@@ -44,6 +47,7 @@ export function ImageUploadField(props: ImageUploadFieldProps) {
 
       const data = (await response.json()) as { url: string };
       setUrl(data.url);
+      onChange?.(data.url);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Не удалось загрузить файл');
     } finally {

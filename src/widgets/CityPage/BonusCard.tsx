@@ -2,19 +2,24 @@ import Image from 'next/image';
 
 import linkImage from '@/assets/images/ic-link.svg';
 import type { CityPageData } from '@/entities/city/getCityPageData';
+import { resolveVenueImages } from '@/entities/place/resolveVenueImages';
 import { PromoBlock } from '@/shared/ui/PromoBlock/PromoBlock';
 
 import styles from './BonusCard.module.css';
 
 interface BonusCardProps {
   place: CityPageData['places'][number];
+  venue: CityPageData['places'][number]['venues'][number];
   promoDescription: string | null;
   promoCode: string | null;
 }
 
 export function BonusCard(props: BonusCardProps) {
-  const { place, promoDescription, promoCode } = props;
-  const image = place.largeImage ?? place.thumbnailImage;
+  const {
+    place, venue, promoDescription, promoCode,
+  } = props;
+  const resolvedImages = resolveVenueImages(place, venue);
+  const image = resolvedImages.largeImage ?? resolvedImages.thumbnailImage;
 
   return (
     <div className={styles.root}>

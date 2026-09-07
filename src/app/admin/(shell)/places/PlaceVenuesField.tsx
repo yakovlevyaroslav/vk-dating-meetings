@@ -3,6 +3,7 @@
 import { PlusIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
 
+import { ImageUploadField } from '@/components/admin/ImageUploadField';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,10 @@ import { Textarea } from '@/components/ui/textarea';
 
 export interface VenueDraft {
   id?: string;
+  // Стабильный ключ для React — не совпадает с id у новых (ещё не сохранённых) точек,
+  // но нужен, чтобы при добавлении/удалении точек состояние формы (в т.ч. ImageUploadField)
+  // не переиспользовалось по позиции в массиве для другой точки
+  clientKey: string;
   name: string;
   address: string;
   latitude: string;
@@ -21,6 +26,8 @@ export interface VenueDraft {
   description: string;
   promoDescription: string;
   promoCode: string;
+  thumbnailImage: string;
+  largeImage: string;
 }
 
 interface PlaceVenuesFieldProps {
@@ -29,6 +36,7 @@ interface PlaceVenuesFieldProps {
 
 function emptyVenue(isPrimary = false): VenueDraft {
   return {
+    clientKey: crypto.randomUUID(),
     name: '',
     address: '',
     latitude: '',
@@ -39,6 +47,8 @@ function emptyVenue(isPrimary = false): VenueDraft {
     description: '',
     promoDescription: '',
     promoCode: '',
+    thumbnailImage: '',
+    largeImage: '',
   };
 }
 
@@ -82,7 +92,7 @@ export function PlaceVenuesField(props: PlaceVenuesFieldProps) {
       <input type="hidden" name="venues" value={JSON.stringify(venues)} />
       {venues.map((venue, index) => (
 
-        <Card key={index}>
+        <Card key={venue.clientKey}>
           <CardContent className="grid gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
               <Label>Название точки</Label>
@@ -153,6 +163,26 @@ export function PlaceVenuesField(props: PlaceVenuesFieldProps) {
                 })}
                 placeholder="Можно заполнить даже без своего промокода"
                 rows={2}
+              />
+            </div>
+            <div className="grid gap-3 sm:col-span-2 sm:grid-cols-2">
+              <ImageUploadField
+                name={`venue-${index}-thumbnailImage`}
+                label="Миниатюра точки (если пусто — берётся у места)"
+                folder="places"
+                defaultValue={venue.thumbnailImage}
+                onChange={(url) => updateVenue(index, {
+                  thumbnailImage: url,
+                })}
+              />
+              <ImageUploadField
+                name={`venue-${index}-largeImage`}
+                label="Большое изображение точки (если пусто — берётся у места)"
+                folder="places"
+                defaultValue={venue.largeImage}
+                onChange={(url) => updateVenue(index, {
+                  largeImage: url,
+                })}
               />
             </div>
             <label className="flex w-fit items-center gap-2 text-sm sm:col-span-2">

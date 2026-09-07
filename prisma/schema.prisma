@@ -88,6 +88,10 @@ model PlaceVenue {
   promoDescription String? @db.Text
   promoCode        String?
 
+  // Если не заполнено — используется соответствующее изображение у Place
+  thumbnailImage String?
+  largeImage     String?
+
   routeStops RouteStop[]
 
   createdAt DateTime @default(now())
