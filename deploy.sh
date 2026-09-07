@@ -24,7 +24,13 @@ export NEXT_DEPLOYMENT_ID="$(git rev-parse --short HEAD)"
 yarn build
 
 echo "Перезапускаю приложение..."
-pm2 restart vk-dating
+if pm2 describe vk-dating > /dev/null 2>&1; then
+  pm2 restart vk-dating
+else
+  echo "Процесс vk-dating не найден в PM2 — запускаю впервые."
+  pm2 start yarn --name vk-dating -- start
+fi
+pm2 save
 
 echo "Готово. Статус:"
 pm2 status vk-dating
