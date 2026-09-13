@@ -11,6 +11,7 @@ import linkImage from '@/assets/images/ic-link.svg';
 import type { Category } from '@/entities/category/getCategories';
 import type { CityPageData } from '@/entities/city/getCityPageData';
 import { resolveVenueImages } from '@/entities/place/resolveVenueImages';
+import { resolveVenueLabel } from '@/entities/place/resolveVenueLabel';
 import { resolveVenuePromo } from '@/entities/place/resolvePlacePromo';
 import { classNames } from '@/shared/lib/classNames';
 import { PromoBlock } from '@/shared/ui/PromoBlock/PromoBlock';
@@ -92,7 +93,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
     () =>
       venueEntries.map(({ place, venue }) => ({
         id: venue.id,
-        label: `${place.name} — ${venue.name}`,
+        label: resolveVenueLabel(place, venue),
         latitude: venue.latitude,
         longitude: venue.longitude,
         hasBonus: venue.hasBonus || place.hasBonus,
@@ -409,7 +410,7 @@ export function MeetingPlacesSection(props: MeetingPlacesSectionProps) {
               ) : null}
               <div className={styles.detailBody}>
                 <span className={styles.detailName}>
-                  {selectedEntry.place.name} — {selectedEntry.venue.name}
+                  {resolveVenueLabel(selectedEntry.place, selectedEntry.venue)}
                 </span>
                 {resolvedPromo?.description ? (
                   <p className={styles.detailDescription}>{resolvedPromo.description}</p>

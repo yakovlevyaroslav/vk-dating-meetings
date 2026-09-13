@@ -16,24 +16,44 @@ import { classNames } from '@/shared/lib/classNames';
 import { CITIES, CitySwitcher, getActiveCity } from './CitySwitcher';
 import styles from './Header.module.css';
 
-const MENU_ITEMS = [
-  {
-    href: '#places', label: 'Места на карте',
-  },
-  {
-    href: '#routes', label: 'Маршруты свиданий',
-  },
-  {
-    href: '#suggest', label: 'Предложить место',
-  },
-];
+interface HeaderProps {
+  showRoutesSection: boolean;
+  showBonusesSection: boolean;
+}
 
 type MobilePanel = 'menu' | 'city' | null;
 
-export function Header() {
+// Показываем в шапке ссылку только на тот раздел, который реально есть на странице.
+// Если включены оба — приоритет у маршрутов.
+function getEntryPointMenuItem(showRoutesSection: boolean, showBonusesSection: boolean) {
+  if (showRoutesSection) {
+    return {
+      href: '#routes', label: 'Маршруты свиданий',
+    };
+  }
+  if (showBonusesSection) {
+    return {
+      href: '#bonuses', label: 'Бонусы',
+    };
+  }
+  return null;
+}
+
+export function Header(props: HeaderProps) {
+  const { showRoutesSection, showBonusesSection } = props;
   const pathname = usePathname();
   const activeCity = getActiveCity(pathname);
   const [openPanel, setOpenPanel] = useState<MobilePanel>(null);
+  const entryPointMenuItem = getEntryPointMenuItem(showRoutesSection, showBonusesSection);
+  const menuItems = [
+    {
+      href: '#places', label: 'Места на карте',
+    },
+    ...(entryPointMenuItem ? [entryPointMenuItem] : []),
+    {
+      href: '#suggest', label: 'Предложить место',
+    },
+  ];
 
   function togglePanel(panel: MobilePanel) {
     setOpenPanel((prev) => (prev === panel ? null : panel));
@@ -59,7 +79,7 @@ export function Header() {
         </div>
 
         <ul className={styles.menuList} aria-label="Меню">
-          {MENU_ITEMS.map((item) => (
+          {menuItems.map((item) => (
             <li key={item.href}>
               <a href={item.href} className={styles.menuItem}>
                 {item.label}
@@ -104,7 +124,7 @@ export function Header() {
       {openPanel === 'menu' ? (
         <div className={styles.mobilePanel}>
           <ul className={styles.mobileMenuList} aria-label="Меню">
-            {MENU_ITEMS.map((item) => (
+            {menuItems.map((item) => (
               <li key={item.href} className={styles.mobileMenuListItem}>
                 <a href={item.href} className={styles.mobileMenuItem} onClick={() => setOpenPanel(null)}>
                   {item.label}

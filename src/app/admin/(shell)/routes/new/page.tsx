@@ -27,11 +27,18 @@ export default async function NewRoutePage() {
     }),
   ]);
 
+  const placeOptions = places.map((place) => ({
+    ...place,
+    venues: place.venues.map((venue) => ({
+      id: venue.id, name: venue.name ?? place.name,
+    })),
+  }));
+
   return (
     <>
       <SiteHeader title="Новый маршрут" />
       <div className="flex flex-1 flex-col gap-4 p-4 md:p-6">
-        <RouteForm action={createRoute} cities={cities} places={places} submitLabel="Создать" />
+        <RouteForm action={createRoute} cities={cities} places={placeOptions} submitLabel="Создать" />
       </div>
     </>
   );

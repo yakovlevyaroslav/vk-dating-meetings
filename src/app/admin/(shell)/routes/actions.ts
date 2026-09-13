@@ -201,6 +201,9 @@ export async function quickCreatePlace(input: QuickCreatePlaceInput) {
       cityId,
       name,
       description: '',
+      // Место создаётся только как точка маршрута (напр. лавочка или парк) —
+      // не должно само по себе появляться в общем списке мест и на карте
+      isPublished: false,
       venues: {
         create: [{
           name, address: input.address.trim() || null, latitude, longitude,

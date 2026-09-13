@@ -25,7 +25,7 @@ interface VenueInput {
 
 function venueData(venue: VenueInput) {
   return {
-    name: venue.name,
+    name: venue.name.trim() || null,
     address: venue.address.trim() || null,
     latitude: Number(venue.latitude),
     longitude: Number(venue.longitude),
@@ -59,9 +59,6 @@ function validateVenues(venues: VenueInput[] | null): string | null {
   }
 
   for (const venue of venues) {
-    if (!venue.name.trim()) {
-      return 'У каждой точки должно быть название';
-    }
     if (!Number.isFinite(Number(venue.latitude)) || !Number.isFinite(Number(venue.longitude))) {
       return 'Координаты точки должны быть числами';
     }

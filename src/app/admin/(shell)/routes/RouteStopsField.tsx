@@ -96,12 +96,19 @@ export function RouteStopsField(props: RouteStopsFieldProps) {
     try {
       const result = await quickCreatePlace(quickForm);
       setPlaces((prev) => [...prev, {
-        id: result.placeId, name: result.placeName, venues: [result.venue],
+        id: result.placeId,
+        name: result.placeName,
+        venues: [{
+          id: result.venue.id, name: result.venue.name ?? result.placeName,
+        }],
       }]);
       setStops((prev) => [
         ...prev,
         {
-          placeVenueId: result.venue.id, placeName: result.placeName, venueName: result.venue.name, description: '',
+          placeVenueId: result.venue.id,
+          placeName: result.placeName,
+          venueName: result.venue.name ?? result.placeName,
+          description: '',
         },
       ]);
       setQuickForm(EMPTY_QUICK_FORM);

@@ -95,13 +95,13 @@ export function PlaceVenuesField(props: PlaceVenuesFieldProps) {
         <Card key={venue.clientKey}>
           <CardContent className="grid gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label>Название точки</Label>
+              <Label>Название точки (необязательно)</Label>
               <Input
                 value={venue.name}
                 onChange={(event) => updateVenue(index, {
                   name: event.target.value,
                 })}
-                placeholder="Напр. «Карлсон на Тверской»"
+                placeholder="Если пусто — используется название места"
               />
             </div>
             <div className="flex flex-col gap-2">

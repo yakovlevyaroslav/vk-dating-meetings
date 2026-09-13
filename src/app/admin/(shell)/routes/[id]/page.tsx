@@ -57,6 +57,12 @@ export default async function EditRoutePage(props: EditRoutePageProps) {
 
   const currentRoute = route;
   const updateRouteWithId = updateRoute.bind(null, currentRoute.id);
+  const placeOptions = places.map((place) => ({
+    ...place,
+    venues: place.venues.map((venue) => ({
+      id: venue.id, name: venue.name ?? place.name,
+    })),
+  }));
 
   async function handleDelete() {
     'use server';
@@ -70,7 +76,7 @@ export default async function EditRoutePage(props: EditRoutePageProps) {
         <RouteForm
           action={updateRouteWithId}
           cities={cities}
-          places={places}
+          places={placeOptions}
           submitLabel="Сохранить"
           defaultValues={{
             cityId: currentRoute.cityId,
@@ -81,7 +87,7 @@ export default async function EditRoutePage(props: EditRoutePageProps) {
             stops: currentRoute.stops.map((stop) => ({
               placeVenueId: stop.placeVenueId,
               placeName: stop.place.name,
-              venueName: stop.placeVenue.name,
+              venueName: stop.placeVenue.name ?? stop.place.name,
               description: stop.description ?? '',
             })),
           }}

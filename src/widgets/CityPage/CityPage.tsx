@@ -37,8 +37,8 @@ export async function CityPage(props: CityPageProps) {
 
       <MeetingPlacesSection places={city.places} categories={categories} />
 
-      {settings.showRoutesSection ? <RoutesSection routes={city.routes} /> : null}
       {settings.showBonusesSection ? <BonusesSection places={city.places} /> : null}
+      {settings.showRoutesSection ? <RoutesSection routes={city.routes} /> : null}
       <SuggestionsSection />
       <AppsSection />
     </main>

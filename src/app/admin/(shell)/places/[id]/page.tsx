@@ -72,7 +72,7 @@ export default async function EditPlacePage(props: EditPlacePageProps) {
             venues: place.venues.map((venue) => ({
               id: venue.id,
               clientKey: venue.id,
-              name: venue.name,
+              name: venue.name ?? '',
               address: venue.address ?? '',
               latitude: String(venue.latitude),
               longitude: String(venue.longitude),

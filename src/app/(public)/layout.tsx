@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
 
 import { Trackers } from '@/core/services/Analytics';
+import { getSiteSettings } from '@/entities/siteSettings/getSiteSettings';
 import { BackgroundLines } from '@/widgets/BackgroundLines/BackgroundLines';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
@@ -64,13 +65,17 @@ interface PublicRootLayoutProps {
   children: ReactNode;
 }
 
-export default function PublicRootLayout(props: PublicRootLayoutProps) {
+export default async function PublicRootLayout(props: PublicRootLayoutProps) {
   const { children } = props;
+  const settings = await getSiteSettings();
 
   return (
     <html lang="ru" className={`${vkSansDisplay.variable} ${vkSansDisplayCondensed.variable}`}>
       <body>
-        <Header />
+        <Header
+          showRoutesSection={settings.showRoutesSection}
+          showBonusesSection={settings.showBonusesSection}
+        />
         {children}
         <Footer />
         <BackgroundLines />

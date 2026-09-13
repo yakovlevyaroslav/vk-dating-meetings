@@ -72,7 +72,9 @@ model PlaceVenue {
   placeId String
   place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
 
-  name      String
+  // Если не заполнено — используется название места (актуально, если у места одна точка
+  // или точки не нужно различать по имени)
+  name      String?
   address   String?
   latitude  Float
   longitude Float
