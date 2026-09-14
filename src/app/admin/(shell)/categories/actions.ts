@@ -6,9 +6,12 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/core/db/prisma';
 
 function readCategoryFields(formData: FormData) {
+  const priorityRaw = Number(formData.get('priority'));
+
   return {
     name: String(formData.get('name') ?? '').trim(),
     emoji: String(formData.get('emoji') ?? '').trim() || null,
+    priority: Number.isFinite(priorityRaw) ? priorityRaw : 0,
   };
 }
 

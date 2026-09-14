@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 interface CategoryFormValues {
   name: string;
   emoji: string;
+  priority: string;
 }
 
 interface CategoryFormProps {
@@ -20,6 +21,7 @@ interface CategoryFormProps {
 const EMPTY_VALUES: CategoryFormValues = {
   name: '',
   emoji: '',
+  priority: '0',
 };
 
 export function CategoryForm(props: CategoryFormProps) {
@@ -37,6 +39,21 @@ export function CategoryForm(props: CategoryFormProps) {
       <div className="flex flex-col gap-2">
         <Label htmlFor="emoji">Эмодзи</Label>
         <Input id="emoji" name="emoji" defaultValue={values.emoji} placeholder="☕️" className="w-24" />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="priority">Приоритет в списке</Label>
+        <Input
+          id="priority"
+          name="priority"
+          type="number"
+          step={1}
+          defaultValue={values.priority}
+          className="w-32"
+        />
+        <p className="text-sm text-muted-foreground">
+          Чем выше значение, тем выше категория в списке. При равном приоритете — по алфавиту.
+        </p>
       </div>
 
       {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}

@@ -7,9 +7,11 @@ import { prisma } from '@/core/db/prisma';
 
 export default async function AdminCategoriesPage() {
   const categories = await prisma.category.findMany({
-    orderBy: {
+    orderBy: [{
+      priority: 'desc',
+    }, {
       name: 'asc',
-    },
+    }],
     include: {
       _count: {
         select: {
@@ -34,6 +36,7 @@ export default async function AdminCategoriesPage() {
               <TableRow>
                 <TableHead>Эмодзи</TableHead>
                 <TableHead>Название</TableHead>
+                <TableHead>Приоритет</TableHead>
                 <TableHead>Мест</TableHead>
               </TableRow>
             </TableHeader>
@@ -46,6 +49,7 @@ export default async function AdminCategoriesPage() {
                       {category.name}
                     </Link>
                   </TableCell>
+                  <TableCell>{category.priority}</TableCell>
                   <TableCell>{category._count.places}</TableCell>
                 </TableRow>
               ))}

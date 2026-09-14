@@ -26,6 +26,8 @@ model Category {
   id    String  @id @default(cuid())
   name  String  @unique
   emoji String?
+  // Чем выше значение, тем выше категория в списке. При равном приоритете — по алфавиту.
+  priority Int @default(0)
 
   places Place[]
 

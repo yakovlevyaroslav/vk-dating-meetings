@@ -42,6 +42,7 @@ export default async function EditCategoryPage(props: EditCategoryPageProps) {
           defaultValues={{
             name: category.name,
             emoji: category.emoji ?? '',
+            priority: String(category.priority),
           }}
         />
         <form action={handleDelete}>
