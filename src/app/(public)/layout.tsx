@@ -52,8 +52,12 @@ const vkSansDisplayCondensed = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://test-vk-meeting.ru'),
   title: 'Места для свиданий от VK Знакомств',
   description: 'Найдите, где провести свидание, с подборкой мест от VK Знакомств',
+  twitter: {
+    card: 'summary_large_image',
+  },
   // TODO: убрать перед публичным запуском сайта
   robots: {
     index: false,
