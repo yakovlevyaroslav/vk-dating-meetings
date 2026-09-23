@@ -10,6 +10,7 @@ export async function updateSiteSettings(
 ): Promise<string | undefined> {
   const showRoutesSection = formData.get('showRoutesSection') === 'on';
   const showBonusesSection = formData.get('showBonusesSection') === 'on';
+  const suggestPlaceUrl = String(formData.get('suggestPlaceUrl') ?? '').trim() || null;
 
   await prisma.siteSettings.upsert({
     where: {
@@ -19,10 +20,12 @@ export async function updateSiteSettings(
       id: 'main',
       showRoutesSection,
       showBonusesSection,
+      suggestPlaceUrl,
     },
     update: {
       showRoutesSection,
       showBonusesSection,
+      suggestPlaceUrl,
     },
   });
 

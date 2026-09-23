@@ -79,6 +79,7 @@ export default async function PublicRootLayout(props: PublicRootLayoutProps) {
         <Header
           showRoutesSection={settings.showRoutesSection}
           showBonusesSection={settings.showBonusesSection}
+          showSuggestPlace={Boolean(settings.suggestPlaceUrl)}
         />
         {children}
         <Footer />

@@ -16,6 +16,7 @@ export default async function AdminSettingsPage() {
           defaultValues={{
             showRoutesSection: settings.showRoutesSection,
             showBonusesSection: settings.showBonusesSection,
+            suggestPlaceUrl: settings.suggestPlaceUrl ?? '',
           }}
         />
       </div>

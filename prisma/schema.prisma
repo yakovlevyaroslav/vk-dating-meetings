@@ -159,6 +159,8 @@ model SiteSettings {
   id                 String  @id @default("main")
   showRoutesSection  Boolean @default(true)
   showBonusesSection Boolean @default(true)
+  // Ссылка кнопки «Предложить место». Если не заполнено — кнопка не показывается
+  suggestPlaceUrl    String?
 
   updatedAt DateTime @updatedAt
 }

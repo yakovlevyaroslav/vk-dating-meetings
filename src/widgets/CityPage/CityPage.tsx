@@ -39,7 +39,7 @@ export async function CityPage(props: CityPageProps) {
 
       {settings.showBonusesSection ? <BonusesSection places={city.places} /> : null}
       {settings.showRoutesSection ? <RoutesSection routes={city.routes} /> : null}
-      <SuggestionsSection />
+      <SuggestionsSection suggestPlaceUrl={settings.suggestPlaceUrl} />
       <AppsSection />
     </main>
   );

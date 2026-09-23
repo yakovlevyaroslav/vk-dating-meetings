@@ -3,6 +3,7 @@ import { prisma } from '@/core/db/prisma';
 const DEFAULT_SETTINGS = {
   showRoutesSection: true,
   showBonusesSection: true,
+  suggestPlaceUrl: null,
 };
 
 export async function getSiteSettings() {

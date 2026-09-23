@@ -3,7 +3,13 @@ import flashImage from '@/assets/images/3d-flash-know.png';
 
 import styles from './SuggestionsSection.module.css';
 
-export function SuggestionsSection() {
+interface SuggestionsSectionProps {
+  suggestPlaceUrl: string | null;
+}
+
+export function SuggestionsSection(props: SuggestionsSectionProps) {
+  const { suggestPlaceUrl } = props;
+
   return (
     <section id="suggest" className={styles.root}>
       <div className={styles.content}>
@@ -15,10 +21,11 @@ export function SuggestionsSection() {
           <img className={styles.image + ' ' + styles.imagePin} src={pinImage.src} alt="Image Pin" />
           <img className={styles.image + ' ' + styles.imageFlash} src={flashImage.src} alt="Image Flash" />
         </h2>
-        {/* TODO: заменить на реальную ссылку для предложения места */}
-        <a href="https://app.pthwy.ru/hUvS0" target="_blank" rel="noreferrer" className={styles.button}>
-          Предложить место
-        </a>
+        {suggestPlaceUrl ? (
+          <a href={suggestPlaceUrl} target="_blank" rel="noreferrer" className={styles.button}>
+            Предложить место
+          </a>
+        ) : null}
         <div className={styles.lighterBackground} />
       </div>
     </section>

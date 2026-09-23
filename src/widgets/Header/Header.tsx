@@ -19,6 +19,7 @@ import styles from './Header.module.css';
 interface HeaderProps {
   showRoutesSection: boolean;
   showBonusesSection: boolean;
+  showSuggestPlace: boolean;
 }
 
 type MobilePanel = 'menu' | 'city' | null;
@@ -40,7 +41,7 @@ function getEntryPointMenuItem(showRoutesSection: boolean, showBonusesSection: b
 }
 
 export function Header(props: HeaderProps) {
-  const { showRoutesSection, showBonusesSection } = props;
+  const { showRoutesSection, showBonusesSection, showSuggestPlace } = props;
   const pathname = usePathname();
   const activeCity = getActiveCity(pathname);
   const [openPanel, setOpenPanel] = useState<MobilePanel>(null);
@@ -50,9 +51,9 @@ export function Header(props: HeaderProps) {
       href: '#places', label: 'Места на карте',
     },
     ...(entryPointMenuItem ? [entryPointMenuItem] : []),
-    {
+    ...(showSuggestPlace ? [{
       href: '#suggest', label: 'Предложить место',
-    },
+    }] : []),
   ];
 
   function togglePanel(panel: MobilePanel) {
