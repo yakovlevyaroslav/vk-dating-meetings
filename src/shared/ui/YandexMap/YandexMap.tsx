@@ -45,7 +45,12 @@ export function YandexMap(props: YandexMapProps) {
     points, className, activePointIds, onPointClick,
   } = props;
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+  // Скрипт мог быть уже загружен предыдущей страницей (напр. при переключении города) —
+  // next/script в этом случае может не вызвать onLoad повторно для нового монтирования,
+  // поэтому проверяем window.ymaps3 сразу при инициализации состояния
+  const [isScriptLoaded, setIsScriptLoaded] = useState(
+    () => typeof window !== 'undefined' && Boolean(window.ymaps3),
+  );
   const onPointClickRef = useRef(onPointClick);
   const markerImagesRef = useRef(new Map<string, HTMLImageElement>());
   const mapInstanceRef = useRef<YMapInstance | null>(null);

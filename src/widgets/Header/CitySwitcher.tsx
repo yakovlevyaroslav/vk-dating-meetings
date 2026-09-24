@@ -74,6 +74,7 @@ export function CitySwitcher() {
               <li key={city.slug} className={styles.dropdownCityItem}>
                 <Link
                   href={city.href}
+                  scroll={false}
                   onClick={() => setIsOpen(false)}
                   className={classNames(
                     styles.dropdownCityLink,

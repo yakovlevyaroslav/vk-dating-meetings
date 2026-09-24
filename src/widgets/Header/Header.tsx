@@ -143,6 +143,7 @@ export function Header(props: HeaderProps) {
               <li key={city.slug}>
                 <Link
                   href={city.href}
+                  scroll={false}
                   onClick={() => setOpenPanel(null)}
                   className={classNames(
                     styles.dropdownCityLink,

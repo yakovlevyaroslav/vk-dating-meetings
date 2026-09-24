@@ -116,6 +116,8 @@
   text-align: center;
   color: var(--color-text-primary);
   font-weight: 600;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .networkFilter {
