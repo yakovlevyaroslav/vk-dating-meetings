@@ -12,9 +12,11 @@ export default async function NewPlacePage() {
       },
     }),
     prisma.category.findMany({
-      orderBy: {
+      orderBy: [{
+        priority: 'desc',
+      }, {
         name: 'asc',
-      },
+      }],
     }),
   ]);
 

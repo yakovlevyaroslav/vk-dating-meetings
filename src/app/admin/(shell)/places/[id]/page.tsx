@@ -29,9 +29,11 @@ export default async function EditPlacePage(props: EditPlacePageProps) {
       },
     }),
     prisma.category.findMany({
-      orderBy: {
+      orderBy: [{
+        priority: 'desc',
+      }, {
         name: 'asc',
-      },
+      }],
     }),
   ]);
 
